@@ -3,7 +3,7 @@
   <div class="chat-item__block{{#if current}} chat-item__block--current{{/if}}">
     {{#if avatar}}
     <div>
-      <img class="chat-item__avatar" src={{ avatar }}><img>
+      {{> Image className="profile-page__image" avatar=avatar alt="opossum" }}
     </div>
     {{else }}
     <div class="chat-item__avatar"></div>

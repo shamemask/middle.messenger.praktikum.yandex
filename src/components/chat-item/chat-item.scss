@@ -28,13 +28,7 @@
     }
   }
 
-  &__avatar {
-    grid-area: a;
-    background: $gray-light-color;
-    height: 47px;
-    width: 47px;
-    border-radius: 50%;
-  }
+  
 
   &__name {
     grid-area: n;

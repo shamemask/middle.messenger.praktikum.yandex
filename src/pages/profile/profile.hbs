@@ -3,8 +3,9 @@
         <form class="profile-page">
             <div class="profile-page__content">
                 <div class="profile-page__avatar-block">
-                    <img class="profile-page__avatar" src="../assets/opossum_1.png"><img>
+                    {{> Image className="profile-page__image" avatar="../assets/opossum_1.png" alt="opossum" }}
                 </div>
+                
                 {{> PageTitle title="Иван" }}
                 {{> InputWithLabel className="profile-page__input" title="Почта" name="email" text="Почта" placeholder="pochta@yandex.ru" }}
                 {{> Hr className="profile-page__hr" }}

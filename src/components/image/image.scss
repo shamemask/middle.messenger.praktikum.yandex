@@ -1,0 +1,9 @@
+@import '../../assets/variables';
+
+.image {
+  grid-area: a;
+  background: $gray-light-color;
+  height: 47px;
+  width: 47px;
+  border-radius: 50%;
+}
