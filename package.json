@@ -18,5 +18,8 @@
   "dependencies": {
     "handlebars": "^4.7.8",
     "vite-plugin-html": "^3.2.2"
+  },
+  "engines": {
+    "node": ">=12"
   }
 }
