@@ -17,6 +17,6 @@
 
 [Артамонов Даниил](https://github.com/shamemask)
 
-### [**Netlyfy**](https://deploy-preview-3--eclectic-empanada-c80e22.netlify.app/)
+### [**Netlyfy**](https://sprint-1--eclectic-empanada-c80e22.netlify.app/)
 
 ### [UI](/ui/README.md)
