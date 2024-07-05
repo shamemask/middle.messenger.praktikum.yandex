@@ -9,3 +9,4 @@ export { PageTitle } from './page-title';
 export { InputWithLabel } from './input-with-label';
 export { Interface } from './interface';
 export { Hr } from './hr';
+export { Main } from './main';
