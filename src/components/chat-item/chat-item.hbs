@@ -1,0 +1,13 @@
+<div class="chat-item">
+  <div class="chat-item__line"></div>
+  <div class="chat-item__block{{#if current}} chat-item__block--current{{/if}}">
+    {{#if avatar}}
+    <div>
+      {{> Image className="profile-page__image" avatar=avatar alt="opossum" }}
+    </div>
+    {{else }}
+    <div class="chat-item__avatar"></div>
+    {{/if}}
+    <div class="chat-item__message"><span class="chat-item__message-text">{{ message }}</span></div>
+  </div>
+</div>
