@@ -1,2 +1,2 @@
 import './hr.scss';
-export { default as Hr } from './hr.hbs?raw';
+export { default as Hr } from './hr.hbs?raw?raw';

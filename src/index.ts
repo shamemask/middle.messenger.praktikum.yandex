@@ -1,37 +1,29 @@
-import Handlebars from 'handlebars';
-import * as Components from './components';
-import * as Pages from './pages';
 
-type PageType = 'chat' | 'login' | 'register' | 'profile' | '404' | '5xx';
+import './index.scss';
+import RegisterPage from "./pages/register";
+import LoginPage from "./pages/login";
 
-const pages: Record<PageType, [string, any?]> = {
-    'chat': [Pages.ChatPage],
-    'login': [Pages.LoginPage],
-    'register': [Pages.RegisterPage],
-    'profile': [Pages.ProfilePage],
-    '404': [Pages.NotFoundPage],
-    '5xx': [Pages.ErrorPage]
-};
+function renderPage(page: string) {
+  let pageComponent;
 
-Object.entries(Components).forEach(([name, component]) => {
-    Handlebars.registerPartial(name, component);
-});
-
-function navigate(page: PageType) {
-    const [source, args] = pages[page];
-    const handlebarsFunct = Handlebars.compile(source);
-    document.body.innerHTML = handlebarsFunct(args);
+  switch(page) {
+    case 'register':
+      pageComponent = new RegisterPage({});
+      break;
+    case 'login':
+    default:
+      pageComponent = new LoginPage({});
+      break;
+  }
+  console.log(pageComponent);
+  const app = document.getElementById('app');
+  if (app) {
+    app.innerHTML = '';
+    app.appendChild(pageComponent.getContent()!);
+  }
 }
 
-document.addEventListener('DOMContentLoaded', () => navigate('login'));
-
-document.addEventListener('click', (e: Event) => {
-    const target = e.target as HTMLElement;
-    const page = target.getAttribute('page') as PageType | null;
-    if (page) {
-        navigate(page);
-
-        e.preventDefault();
-        e.stopImmediatePropagation();
-    }
+window.addEventListener('DOMContentLoaded', () => {
+  const page = window.location.pathname.includes('register') ? 'register' : 'login';
+  renderPage(page);
 });

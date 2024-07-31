@@ -1,2 +1,2 @@
-import './input.scss';
-export { default as Input } from './input.hbs?raw';
+import Input from './input';
+export default Input;
