@@ -1,4 +1,4 @@
-@import '../../assets/variables.scss';
+@import '../../assets/variables';
 
 .chat-item {
   &__line {
@@ -12,7 +12,6 @@
     box-sizing: border-box;
     cursor: pointer;
     display: grid;
-
     gap: 0 10px;
     grid-template:
       "a n n" 13px

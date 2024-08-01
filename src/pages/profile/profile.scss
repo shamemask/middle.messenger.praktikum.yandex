@@ -1,4 +1,4 @@
-@import '../../assets/variables.scss';
+@import '../../assets/variables';
 
 .profile-page {
   display: flex;
@@ -28,7 +28,7 @@
 
   &__link {
     flex-direction: row;
-    font: 500 13px / 13px Inter, "Segoe UI", Roboto, "Helvetica Neue", sans-sans;
+    font: $font-regular $font-body;
     height: 0;
     justify-content: normal;
     margin-bottom: 15px;
