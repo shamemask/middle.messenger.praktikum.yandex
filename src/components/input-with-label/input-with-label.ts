@@ -8,17 +8,19 @@ interface InputWithLabelProps {
   title: string;
   name: string;
   type?: string;
+  text: string;
+  placeholder?: string;
 }
 
 class InputWithLabel extends Block {
   constructor(props: InputWithLabelProps) {
-    props["input"] = new Input({
+    const input = new Input({
       className: "input-field__element",
       type: props["type"],
       title: props["title"],
       name: props["name"]
     })
-    super(props);
+    super({...props, input});
   }
 
   render() {

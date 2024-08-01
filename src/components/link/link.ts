@@ -7,6 +7,7 @@ interface LinkProps {
   text: string;
   page: string;
   url: string;
+  color?: string;
 }
 
 class Link extends Block {

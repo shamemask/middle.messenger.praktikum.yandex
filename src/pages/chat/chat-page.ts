@@ -1,21 +1,15 @@
 import Block from '../../utils/Block';
-import template from './5xx.hbs?raw';
-import './5xx.scss';
+import template from './chat-page.hbs?raw';
+import './chat-page.scss';
+import {Interface, Main} from "../../components";
 
-import {Interface, Link, Main} from "../../components";
 
-class Error extends Block {
+class Chat extends Block {
   constructor(props: any = {}) {
 
-    const login_link = new Link({
-      url: '/login',
-      text: "назад к чатам",
-      page: 'login'
-    });
 
     super({
       ...props,
-      login_link,
     });
   }
 
@@ -24,12 +18,12 @@ class Error extends Block {
   }
 }
 
-class ErrorPage extends Block {
+class ChatPage extends Block {
   constructor(props: any) {
-    const error = new Error();
+    const chat = new Chat();
 
     const dialogContent = new Interface({
-      content: error
+      content: chat
     });
 
     const content = new Main({
@@ -44,4 +38,4 @@ class ErrorPage extends Block {
   }
 }
 
-export default ErrorPage;
+export default ChatPage;

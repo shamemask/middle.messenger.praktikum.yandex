@@ -1,14 +1,8 @@
 import Block from '../../utils/Block';
 import template from './profile.hbs?raw';
 import './profile.scss';
+import {Hr, Image, InputWithLabel, Interface, Link, Main, PageTitle} from "../../components";
 
-import Main from '../../components/main';
-import PageTitle from '../../components/page-title';
-import Link from '../../components/link';
-import Interface from "../../components/interface";
-import Image from "../../components/image";
-import Hr from "../../components/hr";
-import InputWithLabel from "../../components/input-with-label";
 
 class Profile extends Block {
   constructor(props: any = {}) {
@@ -107,9 +101,7 @@ class ProfilePage extends Block {
     const profile = new Profile();
 
     const dialogContent = new Interface({
-      content: [
-        profile
-      ],
+      content: profile
     });
 
     const content = new Main({

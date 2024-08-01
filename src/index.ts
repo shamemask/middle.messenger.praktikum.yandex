@@ -1,9 +1,5 @@
 import './index.scss';
-import RegisterPage from "./pages/register";
-import LoginPage from "./pages/login";
-import ProfilePage from "./pages/profile";
-import NotFoundPage from "./pages/404";
-import ErrorPage from "./pages/5xx";
+import {ErrorPage, LoginPage, NotFoundPage, ProfilePage, RegisterPage} from "./pages";
 
 function renderPage(page: string) {
   let pageComponent;

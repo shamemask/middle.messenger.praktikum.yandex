@@ -1,10 +1,8 @@
 import Block from '../../utils/Block';
 import template from './404.hbs?raw';
 import './404.scss';
+import {Interface, Link, Main} from "../../components";
 
-import Main from '../../components/main';
-import Link from '../../components/link';
-import Interface from "../../components/interface";
 
 class NotFound extends Block {
   constructor(props: any = {}) {

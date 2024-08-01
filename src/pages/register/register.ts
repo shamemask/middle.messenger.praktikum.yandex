@@ -1,13 +1,11 @@
 import Block from '../../utils/Block';
 import template from './register.hbs?raw';
 import './register.scss';
+import {Button, Dialog, InputField, Link, Main, PageTitle} from "../../components";
 
-import Main from '../../components/main';
-import Dialog from '../../components/dialog';
-import PageTitle from '../../components/page-title';
-import InputField from '../../components/input-field';
-import Button from '../../components/button';
-import Link from '../../components/link';
+interface FormData {
+  [key: string]: string;
+}
 
 class Register extends Block {
   constructor(props: any = {}) {
@@ -55,7 +53,7 @@ class Register extends Block {
 }
 
 class RegisterPage extends Block {
-  private password: String;
+  // private password: String;
 
   constructor(props: any) {
     const register = new Register();
@@ -72,22 +70,26 @@ class RegisterPage extends Block {
 
     super({
       ...props, content, events: {
-        submit: (event) => this.handleSubmit(event), blur: (event) => this.handleBlur(event),
+        submit: (event: Event) => this.handleSubmit(event),
+        blur: (event: Event) => this.handleBlur(event),
       },
     });
   }
 
-  handleBlur(event) {
-    const {name, value} = event.target;
+  handleBlur(event: Event) {
+    const {name, value} = event.target as HTMLInputElement;
     this.validateField(name, value);
   }
 
-  handleSubmit(event) {
+  handleSubmit(event: Event) {
+
+
     event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = {};
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const data: FormData = {};
     formData.forEach((value, key) => {
-      data[key] = value;
+      data[key] = value as string;
     });
 
     const isValid = this.validateForm(data);
@@ -100,7 +102,7 @@ class RegisterPage extends Block {
     }
   }
 
-  validateForm(data) {
+  validateForm(data: FormData) {
     let isValid = true;
     Object.entries(data).forEach(([key, value]) => {
       if (!this.validateField(key, value)) {
@@ -119,8 +121,8 @@ class RegisterPage extends Block {
     return isValid;
   }
 
-  validateField(name, value) {
-    const validators = {
+  validateField(name: string, value: string) {
+    const validators: Record<string, RegExp> = {
       first_name: /^[A-ZА-ЯЁ][a-zа-яё-]*$/,
       second_name: /^[A-ZА-ЯЁ][a-zа-яё-]*$/,
       login: /^(?=.*[a-zA-Z])([a-zA-Z0-9-_]{3,20})$/,
@@ -144,14 +146,14 @@ class RegisterPage extends Block {
     return true;
   }
 
-  showError(field, message) {
+  showError(field: string, message: string) {
     const errorElement = document.querySelector(`#${field}-error`);
     if (errorElement) {
       errorElement.textContent = message;
     }
   }
 
-  hideError(field) {
+  hideError(field: string) {
     const errorElement = document.querySelector(`#${field}-error`);
     if (errorElement) {
       errorElement.textContent = '';

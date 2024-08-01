@@ -1,8 +1,8 @@
-import './chat-item.scss';
+import './chat-list.scss';
 import Block from "../../utils/Block";
-import template from "./chat-item.hbs?raw";
+import template from "./chat-list.hbs?raw";
 
-class ChatItem extends Block {
+class ChatList extends Block {
   constructor({...props}) {
     super(props);
   }
@@ -12,4 +12,4 @@ class ChatItem extends Block {
   }
 }
 
-export default ChatItem;
+export default ChatList;

@@ -1,13 +1,8 @@
 import Block from '../../utils/Block';
 import template from './login.hbs?raw';
 import './login.scss';
+import {Button, Dialog, InputField, Link, Main, PageTitle} from "../../components";
 
-import Main from '../../components/main';
-import Dialog from '../../components/dialog';
-import PageTitle from '../../components/page-title';
-import InputField from '../../components/input-field';
-import Button from '../../components/button';
-import Link from '../../components/link';
 
 class Login extends Block {
   constructor(props: any = {}) {
