@@ -1,17 +1,17 @@
-@import '../../assets/variables';
+@import url('../../assets/variables.scss');
 
 .link {
-  font: $font-small;
+  color: $link-color;
+  cursor: pointer;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  font: $font-small;
   height: 40px;
-  width: 100%;
+  justify-content: center;
   text-align: center;
-  color: $link-color;
   text-decoration: none;
-  cursor: pointer;
-  
+  width: 100%;
+
 
   &:hover {
     text-decoration: underline;

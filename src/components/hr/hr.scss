@@ -1,8 +1,8 @@
-@import '../../assets/variables';
+@import url('../../assets/variables.scss');
 
 .hr {
-  opacity: 0.3;
-  border-bottom: 1px $text-light-grey-color ;
-  margin-top: 0;
+  border-bottom: 1px $text-light-grey-color;
   margin-bottom: 0;
+  margin-top: 0;
+  opacity: 0.3;
 }

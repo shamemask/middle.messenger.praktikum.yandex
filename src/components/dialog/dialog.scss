@@ -1,8 +1,8 @@
-@import '../../assets/variables';
+@import url('../../assets/variables.scss');
 
 .dialog {
   background: $dialog-bgcolor;
-  box-shadow: $dialog-shadow;
   border-radius: 12px;
+  box-shadow: $dialog-shadow;
   padding: 30px;
 }

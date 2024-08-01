@@ -1,12 +1,12 @@
-@import '../../assets/variables';
+@import url('../../assets/variables.scss');
 
 .button {
-  height: 40px;
-  width: 100%;
-  text-align: center;
-  border-radius: 8px;
   background-color: $button-bgcolor;
-  color: $button-color;
   border: 0;
+  border-radius: 8px;
+  color: $button-color;
   cursor: pointer;
+  height: 40px;
+  text-align: center;
+  width: 100%;
 }

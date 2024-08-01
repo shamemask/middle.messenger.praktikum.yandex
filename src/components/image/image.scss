@@ -1,9 +1,9 @@
-@import '../../assets/variables';
+@import url('../../assets/variables.scss');
 
 .image {
-  grid-area: a;
   background: $gray-light-color;
+  border-radius: 50%;
+  grid-area: a;
   height: 47px;
   width: 47px;
-  border-radius: 50%;
 }
