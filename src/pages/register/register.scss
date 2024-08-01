@@ -1,3 +1,5 @@
+@import '../../assets/variables';
+
 .register-page {
   width: 280px;
   height: 480px;
@@ -10,5 +12,9 @@
 
   &__input {
     margin-top: 16px;
+  }
+
+  &__error {
+    color: $text-red;
   }
 }

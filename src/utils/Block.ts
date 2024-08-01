@@ -12,7 +12,7 @@ export default class Block {
 
   _element = null;
   _id = Math.floor(100000 + Math.random() * 900000);
-  private props: any;
+  protected props: any;
   private children: {};
   private lists: {};
   private eventBus: () => EventBus;
@@ -30,7 +30,9 @@ export default class Block {
 
   _addEvents() {
     const {events = {}} = this.props;
-    Object.keys(events).forEach(eventName => {this._element.addEventListener(eventName, events[eventName])} );
+    Object.keys(events).forEach(eventName => {
+      this._element.addEventListener(eventName, events[eventName])
+    });
   }
 
   _registerEvents(eventBus) {
@@ -46,10 +48,13 @@ export default class Block {
 
   _componentDidMount(oldProps) {
     this.componentDidMount(oldProps);
-    Object.values(this.children).forEach(child => {child.dispatchComponentDidMount();});
+    Object.values(this.children).forEach(child => {
+      child.dispatchComponentDidMount();
+    });
   }
 
-  componentDidMount(oldProps) {}
+  componentDidMount(oldProps) {
+  }
 
   dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
@@ -75,7 +80,7 @@ export default class Block {
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (value instanceof Block) {
         children[key] = value;
-      } else if(Array.isArray(value)) {
+      } else if (Array.isArray(value)) {
         lists[key] = value;
       } else {
         props[key] = value;
@@ -106,8 +111,8 @@ export default class Block {
   }
 
   _render() {
-    const propsAndStubs = { ...this.props };
-    const _tmpId =  Math.floor(100000 + Math.random() * 900000);
+    const propsAndStubs = {...this.props};
+    const _tmpId = Math.floor(100000 + Math.random() * 900000);
     Object.entries(this.children).forEach(([key, child]) => {
       propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
     });
@@ -148,7 +153,8 @@ export default class Block {
     this.addAttributes();
   }
 
-  render() {}
+  render() {
+  }
 
   getContent() {
     return this.element;
