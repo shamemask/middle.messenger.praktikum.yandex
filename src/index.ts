@@ -1,13 +1,25 @@
-
 import './index.scss';
 import RegisterPage from "./pages/register";
 import LoginPage from "./pages/login";
+import ProfilePage from "./pages/profile";
 
 function renderPage(page: string) {
   let pageComponent;
 
-  switch(page) {
+  switch (page) {
     case 'register':
+      pageComponent = new RegisterPage({});
+      break;
+    case 'profile':
+      pageComponent = new ProfilePage({});
+      break;
+    case 'chat':
+      pageComponent = new RegisterPage({});
+      break;
+    case '404':
+      pageComponent = new RegisterPage({});
+      break;
+    case '5xx':
       pageComponent = new RegisterPage({});
       break;
     case 'login':
@@ -24,6 +36,6 @@ function renderPage(page: string) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  const page = window.location.pathname.includes('register') ? 'register' : 'login';
+  const page = window.location.pathname.substring(1);
   renderPage(page);
 });

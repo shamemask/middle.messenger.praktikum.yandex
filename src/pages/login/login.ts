@@ -12,13 +12,18 @@ import Link from '../../components/link';
 
 class Login extends Block {
   constructor(props: any = {}) {
-    const page_title = new PageTitle({ title: 'Вход' });
-    const input_field_login = new InputField({ className: 'login-page__input', title: 'Логин', name: 'login' });
-    const input_field_password = new InputField({ className: 'login-page__input', title: 'Пароль', name: 'password', type: 'password' });
-    const button = new Button({ text: 'Авторизоваться', page: 'profile' });
-    const link = new Link({ url: '/register', text: 'Нет аккаунта?', page: 'register' });
+    const page_title = new PageTitle({title: 'Вход'});
+    const input_field_login = new InputField({className: 'login-page__input', title: 'Логин', name: 'login'});
+    const input_field_password = new InputField({
+      className: 'login-page__input',
+      title: 'Пароль',
+      name: 'password',
+      type: 'password'
+    });
+    const button = new Button({text: 'Авторизоваться', page: 'profile'});
+    const link = new Link({url: '/register', text: 'Нет аккаунта?', page: 'register'});
 
-    super({ ...props, page_title, input_field_login, input_field_password, button, link, });
+    super({...props, page_title, input_field_login, input_field_password, button, link,});
   }
 
   render() {
@@ -41,7 +46,7 @@ class LoginPage extends Block {
       content: dialogContent,
     });
 
-    super({ ...props, content });
+    super({...props, content});
   }
 
   render() {

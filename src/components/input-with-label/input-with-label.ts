@@ -1,18 +1,17 @@
-//@ts-nocheck
 import Block from '../../utils/Block';
-import template from './input-field.hbs?raw';
-import './input-field.scss';
+import template from './input-with-label.hbs?raw';
+import './input-with-label.scss';
 import Input from "../input";
 
-interface InputFieldProps {
+interface InputWithLabelProps {
   className: string;
   title: string;
   name: string;
   type?: string;
 }
 
-class InputField extends Block {
-  constructor(props: InputFieldProps) {
+class InputWithLabel extends Block {
+  constructor(props: InputWithLabelProps) {
     props["input"] = new Input({
       className: "input-field__element",
       type: props["type"],
@@ -27,4 +26,4 @@ class InputField extends Block {
   }
 }
 
-export default InputField;
+export default InputWithLabel;
