@@ -94,7 +94,7 @@ class RegisterPage extends Block {
 
     if (isValid) {
       console.log(data);
-      window.location.href = '/chat';
+      window.location.href = '/profile';
     } else {
       console.log('Validation failed');
     }

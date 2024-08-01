@@ -2,6 +2,8 @@ import './index.scss';
 import RegisterPage from "./pages/register";
 import LoginPage from "./pages/login";
 import ProfilePage from "./pages/profile";
+import NotFoundPage from "./pages/404";
+import ErrorPage from "./pages/5xx";
 
 function renderPage(page: string) {
   let pageComponent;
@@ -17,10 +19,10 @@ function renderPage(page: string) {
       pageComponent = new RegisterPage({});
       break;
     case '404':
-      pageComponent = new RegisterPage({});
+      pageComponent = new NotFoundPage({});
       break;
     case '5xx':
-      pageComponent = new RegisterPage({});
+      pageComponent = new ErrorPage({});
       break;
     case 'login':
     default:

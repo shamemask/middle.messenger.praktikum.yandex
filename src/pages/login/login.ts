@@ -1,4 +1,3 @@
-//@ts-nocheck
 import Block from '../../utils/Block';
 import template from './login.hbs?raw';
 import './login.scss';
