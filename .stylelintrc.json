@@ -5,7 +5,6 @@
   ],
   "rules": {
     "font-family-name-quotes": "always-where-recommended",
-    "order/properties-alphabetical-order": true,
-    "import-notation": "url"
+    "order/properties-alphabetical-order": true
   }
 }

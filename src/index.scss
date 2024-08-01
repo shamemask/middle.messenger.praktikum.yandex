@@ -1,4 +1,4 @@
-@import url('./assets/variables.scss');
+@import './assets/variables.scss';
 
 html, body {
   height: 100%;
@@ -8,7 +8,7 @@ html, body {
 
 body {
   align-items: center;
-  background-color: $text-bgcolor;
+  background-color: $text-bg-color;
   color: $text-color;
   display: flex;
   font: $font-regular;
