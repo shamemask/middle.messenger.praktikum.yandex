@@ -1,4 +1,4 @@
-import Block from '../../utils/Block';
+import {Block} from '../../utils/Block';
 import template from './404.hbs?raw';
 import './404.scss';
 import {Interface, Link, Main} from "../../components";

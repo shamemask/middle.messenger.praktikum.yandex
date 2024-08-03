@@ -1,5 +1,5 @@
 //@ts-nocheck
-import Block from '../../utils/Block';
+import {Block} from '../../utils/Block';
 import template from './page-title.hbs?raw';
 import './page-title.scss';
 

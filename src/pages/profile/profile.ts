@@ -1,11 +1,17 @@
-import Block from '../../utils/Block';
 import template from './profile.hbs?raw';
 import './profile.scss';
-import {Hr, Image, InputWithLabel, Interface, Link, Main, PageTitle} from "../../components";
+import {Button, Hr, Image, InputWithLabel, Interface, Link, Main, PageTitle} from "../../components";
+import {Block, BlockProps} from "../../utils/Block";
+import {validateField, validateForm} from "../../utils/validator";
 
 
-class Profile extends Block {
-  constructor(props: any = {}) {
+interface FormData {
+  [key: string]: string;
+}
+
+
+class Profile<Props extends BlockProps = {}> extends Block<BlockProps> {
+  constructor(props: BlockProps = {}) {
     const image = new Image({className: "profile-page__image", avatar: "../assets/opossum_1.png", alt: "opossum"});
     const page_title = new PageTitle({title: "Иван"});
     const email_with_label = new InputWithLabel({
@@ -60,12 +66,11 @@ class Profile extends Block {
     const hr6 = new Hr({className: "profile-page__hr"})
     const _5xx = new Link({className: "profile-page__link", url: '/5xx', text: "Изменить пароль(500)", page: '500'});
     const hr7 = new Hr({className: "profile-page__hr"})
-    const login_link = new Link({
+    const login_link = new Button({
       className: "profile-page__link profile-page__red",
-      url: '/login',
       text: "Выйти",
       page: 'login',
-      color: "red"
+      type: "submit"
     });
 
     super({
@@ -96,8 +101,8 @@ class Profile extends Block {
   }
 }
 
-class ProfilePage extends Block {
-  constructor(props: any) {
+class ProfilePage<Props extends BlockProps = {}> extends Block<BlockProps> {
+  constructor(props: BlockProps) {
     const profile = new Profile();
 
     const dialogContent = new Interface({
@@ -108,8 +113,38 @@ class ProfilePage extends Block {
       content: dialogContent,
     });
 
-    super({...props, content});
+    super({
+      ...props, content, events: {
+        submit: (event: Event) => this.handleSubmit(event),
+        blur: (event: Event) => this.handleBlur(event),
+      },
+    });
   }
+
+  handleBlur(event: Event) {
+    const {name, value} = event.target as HTMLInputElement;
+    validateField(name, value);
+  }
+
+  handleSubmit(event: Event) {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const data: FormData = {};
+    formData.forEach((value, key) => {
+      data[key] = value as string;
+    });
+
+    const isValid = validateForm(data);
+
+    if (isValid) {
+      console.log(data);
+      window.location.href = '/';
+    } else {
+      console.log('Validation failed');
+    }
+  }
+
 
   render() {
     return '{{{ content }}}';

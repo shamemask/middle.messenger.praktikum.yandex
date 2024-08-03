@@ -38,6 +38,13 @@
   }
 
   &__red {
+    background-color: $text-red;
+    display: flex;
+    justify-content: center; // Горизонтальное выравнивание
+    align-items: center;
+  }
+
+  &__error {
     color: $text-red;
   }
 }

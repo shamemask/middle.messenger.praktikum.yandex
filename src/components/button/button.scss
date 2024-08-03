@@ -1,7 +1,8 @@
 @import '../../assets/variables';
 
 .button {
-  background-color: $button-bgcolor;
+  //background-color: $button-bgcolor;
+  
   border: 0;
   border-radius: 8px;
   color: $button-color;
@@ -9,4 +10,23 @@
   height: 40px;
   text-align: center;
   width: 100%;
+}
+
+//.button {
+//  display: flex;
+//  justify-content: center; // Горизонтальное выравнивание
+//  align-items: center; // Вертикальное выравнивание
+//  width: 100px; // Пример ширины кнопки
+//  height: 40px; // Пример высоты кнопки
+//  background-color: #3369f3; // Пример фона кнопки
+//  color: #fff; // Цвет текста кнопки
+//  border: none; // Убираем границу
+//  border-radius: 5px; // Пример скругленных углов
+//  cursor: pointer; // Изменение курсора при наведении
+//  font-size: 16px; // Размер текста
+//  font-weight: 500; // Жирность текста
+//}
+
+.button:hover {
+  background-color: #274ab7; // Изменение фона при наведении
 }

@@ -1,5 +1,4 @@
-//@ts-nocheck
-import Block from '../../utils/Block';
+import {Block} from '../../utils/Block';
 import template from './button.hbs?raw';
 import './button.scss';
 
@@ -8,6 +7,7 @@ interface ButtonProps {
   text: string;
   page: string;
   type?: string;
+  color?: string;
 }
 
 class Button extends Block {

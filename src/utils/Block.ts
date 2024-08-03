@@ -1,8 +1,10 @@
-//@ts-nocheck
 import EventBus from "./EventBus";
 import Handlebars from "handlebars";
 
-export default class Block {
+export type BlockProps = Record<string, any>;
+
+export class Block<Props extends BlockProps = {}> {
+  protected props: BlockProps;
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
@@ -17,7 +19,7 @@ export default class Block {
   private lists: {};
   private eventBus: () => EventBus;
 
-  constructor(propsWithChildren = {}) {
+  constructor(propsWithChildren: BlockProps = {}) {
     const eventBus = new EventBus();
     const {props, children, lists} = this._getChildrenPropsAndProps(propsWithChildren);
     this.props = this._makePropsProxy({...props});
@@ -40,6 +42,14 @@ export default class Block {
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+  }
+
+  _removeEvents(): void {
+    const {events = {}} = this.props as { events: Record<string, EventListenerOrEventListenerObject> };
+
+    Object.entries(events).forEach(([event, listener]) => {
+      this._element?.removeEventListener(event, listener);
+    });
   }
 
   init() {
@@ -156,7 +166,7 @@ export default class Block {
   render() {
   }
 
-  getContent() {
+  getContent(): HTMLElement | null {
     return this.element;
   }
 
@@ -192,3 +202,4 @@ export default class Block {
     this.getContent().style.display = "none";
   }
 }
+

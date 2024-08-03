@@ -1,5 +1,5 @@
 import './chat-list.scss';
-import Block from "../../utils/Block";
+import {Block} from "../../utils/Block";
 import template from "./chat-list.hbs?raw";
 
 class ChatList extends Block {
