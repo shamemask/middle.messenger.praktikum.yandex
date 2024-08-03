@@ -1,7 +1,6 @@
 import EventBus from "./EventBus";
 import Handlebars from "handlebars";
 
-type Events = Record<string, (event: Event) => void>;
 export type BlockProps = Record<string, any>;
 
 export class Block {
@@ -18,8 +17,6 @@ export class Block {
   private children: {};
   private lists: {};
   private eventBus: () => EventBus;
-  private eventHandlers: { [key: string]: EventListener } = {};
-
 
   constructor(propsWithChildren: BlockProps = {}) {
     const eventBus = new EventBus();
@@ -46,22 +43,12 @@ export class Block {
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  protected _removeEvents() {
-    if (!this.props.events) return;
+  _removeEvents(): void {
+    const {events = {}} = this.props as { events: Record<string, EventListenerOrEventListenerObject> };
 
-    Object.entries(this.eventHandlers).forEach(([event, handler]) => {
-      this.element?.removeEventListener(event, handler);
+    Object.entries(events).forEach(([event, listener]) => {
+      this._element?.removeEventListener(event, listener);
     });
-
-    this.eventHandlers = {};
-  }
-
-  public destroy() {
-    this._removeEvents();
-    if (this.element?.parentNode) {
-      this.element.parentNode.removeChild(this.element);
-    }
-    this._element = null;
   }
 
   init() {
@@ -182,7 +169,7 @@ export class Block {
     return this.element;
   }
 
-  _makePropsProxy(props: unknown) {
+  _makePropsProxy(props) {
     const self = this;
 
     return new Proxy(props, {
@@ -202,7 +189,7 @@ export class Block {
     });
   }
 
-  _createDocumentElement(tagName: string) {
+  _createDocumentElement(tagName) {
     return document.createElement(tagName);
   }
 
