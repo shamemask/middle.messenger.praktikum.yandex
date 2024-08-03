@@ -1,10 +1,10 @@
 import EventBus from "./EventBus";
 import Handlebars from "handlebars";
 
+type Events = Record<string, (event: Event) => void>;
 export type BlockProps = Record<string, any>;
 
-export class Block<Props extends BlockProps = {}> {
-  protected props: BlockProps;
+export class Block {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
@@ -14,10 +14,12 @@ export class Block<Props extends BlockProps = {}> {
 
   _element = null;
   _id = Math.floor(100000 + Math.random() * 900000);
-  protected props: any;
+  protected props: BlockProps;
   private children: {};
   private lists: {};
   private eventBus: () => EventBus;
+  private eventHandlers: { [key: string]: EventListener } = {};
+
 
   constructor(propsWithChildren: BlockProps = {}) {
     const eventBus = new EventBus();
@@ -44,12 +46,22 @@ export class Block<Props extends BlockProps = {}> {
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  _removeEvents(): void {
-    const {events = {}} = this.props as { events: Record<string, EventListenerOrEventListenerObject> };
+  protected _removeEvents() {
+    if (!this.props.events) return;
 
-    Object.entries(events).forEach(([event, listener]) => {
-      this._element?.removeEventListener(event, listener);
+    Object.entries(this.eventHandlers).forEach(([event, handler]) => {
+      this.element?.removeEventListener(event, handler);
     });
+
+    this.eventHandlers = {};
+  }
+
+  public destroy() {
+    this._removeEvents();
+    if (this.element?.parentNode) {
+      this.element.parentNode.removeChild(this.element);
+    }
+    this._element = null;
   }
 
   init() {
@@ -166,11 +178,11 @@ export class Block<Props extends BlockProps = {}> {
   render() {
   }
 
-  getContent(): HTMLElement | null {
+  getContent(): HTMLElement {
     return this.element;
   }
 
-  _makePropsProxy(props) {
+  _makePropsProxy(props: unknown) {
     const self = this;
 
     return new Proxy(props, {
@@ -190,7 +202,7 @@ export class Block<Props extends BlockProps = {}> {
     });
   }
 
-  _createDocumentElement(tagName) {
+  _createDocumentElement(tagName: string) {
     return document.createElement(tagName);
   }
 

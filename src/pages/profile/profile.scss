@@ -38,10 +38,10 @@
   }
 
   &__red {
+    align-items: center;
     background-color: $text-red;
     display: flex;
-    justify-content: center; // Горизонтальное выравнивание
-    align-items: center;
+    justify-content: center;
   }
 
   &__error {

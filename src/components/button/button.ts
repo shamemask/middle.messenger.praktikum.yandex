@@ -15,7 +15,7 @@ class Button extends Block {
     super({
       ...props,
       events: {
-        click: (event) => this.navigate(event),
+        click: (event: Event) => this.navigate(event),
       },
     });
   }
@@ -24,7 +24,7 @@ class Button extends Block {
     return template;
   }
 
-  private navigate(event) {
+  private navigate(event: Event) {
     const {page, type} = this.props;
     if (type !== 'submit') {
       event.preventDefault();

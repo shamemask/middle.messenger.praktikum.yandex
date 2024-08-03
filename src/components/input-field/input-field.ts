@@ -12,13 +12,13 @@ interface InputFieldProps {
 
 class InputField extends Block {
   constructor(props: InputFieldProps) {
-    props["input"] = new Input({
+    const input = new Input({
       className: "input-field__element",
       type: props["type"],
       title: props["title"],
       name: props["name"]
     })
-    super(props);
+    super({...props, input});
   }
 
   render() {

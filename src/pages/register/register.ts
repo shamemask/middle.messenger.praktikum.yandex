@@ -11,7 +11,7 @@ interface FormData {
 }
 
 
-class Register<Props extends BlockProps = {}> extends Block<BlockProps> {
+class Register extends Block<BlockProps> {
   constructor(props: any = {}) {
     const page_title = new PageTitle({title: 'Регистрация'});
     const login_field = new InputField({className: 'register-page__input', title: 'Логин', name: 'login'});
@@ -56,7 +56,7 @@ class Register<Props extends BlockProps = {}> extends Block<BlockProps> {
   }
 }
 
-class RegisterPage<Props extends BlockProps = {}> extends Block<BlockProps> {
+class RegisterPage extends Block<BlockProps> {
   // private password: String;
 
   constructor(props: any) {
