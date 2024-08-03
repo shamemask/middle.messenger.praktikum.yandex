@@ -10,7 +10,7 @@ interface FormData {
 }
 
 
-class Profile extends Block<BlockProps> {
+class Profile extends Block<{}> {
   constructor(props: BlockProps = {}) {
     const image = new Image({className: "profile-page__image", avatar: "../assets/opossum_1.png", alt: "opossum"});
     const page_title = new PageTitle({title: "Иван"});
@@ -101,7 +101,7 @@ class Profile extends Block<BlockProps> {
   }
 }
 
-class ProfilePage extends Block<BlockProps> {
+class ProfilePage extends Block<{}> {
   constructor(props: BlockProps) {
     const profile = new Profile();
 

@@ -2,7 +2,7 @@ import template from './register.hbs?raw';
 import './register.scss';
 import {Button, Dialog, InputField, Link, Main, PageTitle} from "../../components";
 
-import {Block, BlockProps} from "../../utils/Block";
+import {Block} from "../../utils/Block";
 import {validateField, validateForm} from "../../utils/validator";
 
 
@@ -11,7 +11,7 @@ interface FormData {
 }
 
 
-class Register extends Block<BlockProps> {
+class Register extends Block<{}> {
   constructor(props: any = {}) {
     const page_title = new PageTitle({title: 'Регистрация'});
     const login_field = new InputField({className: 'register-page__input', title: 'Логин', name: 'login'});
@@ -56,8 +56,7 @@ class Register extends Block<BlockProps> {
   }
 }
 
-class RegisterPage extends Block<BlockProps> {
-  // private password: String;
+class RegisterPage extends Block<{}> {
 
   constructor(props: any) {
     const register = new Register();
