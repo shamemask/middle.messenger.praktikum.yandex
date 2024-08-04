@@ -2,7 +2,7 @@ import template from './register.hbs?raw';
 import './register.scss';
 import {Button, Dialog, InputField, Link, Main, PageTitle} from "../../components";
 
-import {Block} from "../../utils/Block";
+import {Block, BlockProps} from "../../utils/Block";
 import {validateField, validateForm} from "../../utils/validator";
 
 
@@ -11,8 +11,8 @@ interface FormData {
 }
 
 
-class Register extends Block<{}> {
-  constructor(props: any = {}) {
+class Register extends Block<BlockProps> {
+  constructor(props: BlockProps = {}) {
     const page_title = new PageTitle({title: 'Регистрация'});
     const login_field = new InputField({className: 'register-page__input', title: 'Логин', name: 'login'});
     const first_name_field = new InputField({className: 'register-page__input', title: 'Имя', name: 'first_name'});
@@ -58,7 +58,7 @@ class Register extends Block<{}> {
 
 class RegisterPage extends Block<{}> {
 
-  constructor(props: any) {
+  constructor() {
     const register = new Register();
 
     const dialogContent = new Dialog({
@@ -72,7 +72,7 @@ class RegisterPage extends Block<{}> {
     });
 
     super({
-      ...props, content, events: {
+      content, events: {
         submit: (event: Event) => this.handleSubmit(event),
         blur: (event: Event) => this.handleBlur(event),
       },
@@ -90,7 +90,7 @@ class RegisterPage extends Block<{}> {
     const formData = new FormData(form);
     const data: FormData = {};
     formData.forEach((value, key) => {
-      data[key] = value as string;
+      data[key] = value.toString();
     });
 
     const isValid = validateForm(data);

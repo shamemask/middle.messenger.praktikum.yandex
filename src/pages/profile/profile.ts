@@ -10,7 +10,7 @@ interface FormData {
 }
 
 
-class Profile extends Block<{}> {
+class Profile extends Block<BlockProps> {
   constructor(props: BlockProps = {}) {
     const image = new Image({className: "profile-page__image", avatar: "../assets/opossum_1.png", alt: "opossum"});
     const page_title = new PageTitle({title: "Иван"});
@@ -102,7 +102,7 @@ class Profile extends Block<{}> {
 }
 
 class ProfilePage extends Block<{}> {
-  constructor(props: BlockProps) {
+  constructor() {
     const profile = new Profile();
 
     const dialogContent = new Interface({
@@ -114,7 +114,7 @@ class ProfilePage extends Block<{}> {
     });
 
     super({
-      ...props, content, events: {
+      content, events: {
         submit: (event: Event) => this.handleSubmit(event),
         blur: (event: Event) => this.handleBlur(event),
       },

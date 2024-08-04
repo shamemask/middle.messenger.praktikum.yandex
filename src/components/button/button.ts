@@ -25,7 +25,7 @@ class Button extends Block {
   }
 
   private navigate(event: Event) {
-    const {page, type} = this.props;
+    const {page, type} = this.props as ButtonProps;
     if (type !== 'submit') {
       event.preventDefault();
       window.location.href = `/${page}`;

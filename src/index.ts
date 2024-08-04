@@ -6,13 +6,13 @@ function renderPage(page: string) {
 
   switch (page) {
     case 'register':
-      pageComponent = new RegisterPage({});
+      pageComponent = new RegisterPage();
       break;
     case 'profile':
-      pageComponent = new ProfilePage({});
+      pageComponent = new ProfilePage();
       break;
     case 'chat':
-      pageComponent = new RegisterPage({});
+      pageComponent = new RegisterPage();
       break;
     case '404':
       pageComponent = new NotFoundPage({});
@@ -22,7 +22,7 @@ function renderPage(page: string) {
       break;
     case 'login':
     default:
-      pageComponent = new LoginPage({});
+      pageComponent = new LoginPage();
       break;
   }
   console.log(pageComponent);

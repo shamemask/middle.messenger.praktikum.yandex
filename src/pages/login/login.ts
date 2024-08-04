@@ -1,11 +1,11 @@
-import {Block} from '../../utils/Block';
+import {Block, BlockProps} from '../../utils/Block';
 import template from './login.hbs?raw';
 import './login.scss';
 import {Button, Dialog, InputField, Link, Main, PageTitle} from "../../components";
 
 
-class Login extends Block {
-  constructor(props: any = {}) {
+class Login extends Block<BlockProps> {
+  constructor(props: BlockProps = {}) {
     const page_title = new PageTitle({title: 'Вход'});
     const input_field_login = new InputField({className: 'login-page__input', title: 'Логин', name: 'login'});
     const input_field_password = new InputField({
@@ -26,8 +26,8 @@ class Login extends Block {
   }
 }
 
-class LoginPage extends Block {
-  constructor(props: any) {
+class LoginPage extends Block<{}> {
+  constructor() {
     const login = new Login();
 
     const dialogContent = new Dialog({
@@ -40,7 +40,7 @@ class LoginPage extends Block {
       content: dialogContent,
     });
 
-    super({...props, content});
+    super({content});
   }
 
   render() {
