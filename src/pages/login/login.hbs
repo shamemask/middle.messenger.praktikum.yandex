@@ -1,15 +1,11 @@
-{{#> Main }}
-    {{#> Dialog }}
-        <form class="login-page">
-            <div class="login-page__content">
-                {{> PageTitle title="Вход" }}
-                {{> InputField className="login-page__input" title="Логин" name="login" }}
-                {{> InputField className="login-page__input" title="Пароль" name="password" type="password" }}
-            </div>
-            <div class="login-page__footer">
-                {{> Button text="Авторизоваться" page="profile" }}
-                {{> Link text="Нет аккаунта?" page="register" }}
-            </div>
-        </form>
-    {{/ Dialog }}
-{{/ Main }}
+<form class="login-page">
+  <div class="login-page__content">
+    {{{ page_title }}}
+    {{{ input_field_login }}}
+    {{{ input_field_password }}}
+  </div>
+  <div class="login-page__footer">
+    {{{ button }}}
+    {{{ link }}}
+  </div>
+</form>

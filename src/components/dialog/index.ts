@@ -1,2 +1,2 @@
-import './dialog.scss';
-export { default as Dialog } from './dialog.hbs?raw';
+import Dialog from './dialog';
+export default Dialog;
