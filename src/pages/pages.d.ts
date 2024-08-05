@@ -1,5 +1,5 @@
 declare module './pages' {
-  import {Block} from "../utils/Block";
+  import Block from "../utils/Block";
   export const ChatPage: Block;
   export const LoginPage: Block;
   export const RegisterPage: Block;

@@ -1,7 +1,7 @@
 import template from './profile.hbs?raw';
 import './profile.scss';
 import {Button, Hr, Image, InputWithLabel, Interface, Link, Main, PageTitle} from "../../components";
-import {Block, BlockProps} from "../../utils/Block";
+import Block from "../../utils/Block";
 import {validateField, validateForm} from "../../utils/validator";
 
 
@@ -10,8 +10,8 @@ interface FormData {
 }
 
 
-class Profile extends Block<BlockProps> {
-  constructor(props: BlockProps = {}) {
+class Profile extends Block {
+  constructor() {
     const image = new Image({className: "profile-page__image", avatar: "../assets/opossum_1.png", alt: "opossum"});
     const page_title = new PageTitle({title: "Иван"});
     const email_with_label = new InputWithLabel({
@@ -74,7 +74,6 @@ class Profile extends Block<BlockProps> {
     });
 
     super({
-      ...props,
       image,
       page_title,
       email_with_label,

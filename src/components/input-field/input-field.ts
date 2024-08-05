@@ -1,4 +1,4 @@
-import {Block} from '../../utils/Block';
+import Block from '../../utils/Block';
 import template from './input-field.hbs?raw';
 import './input-field.scss';
 import Input from "../input";

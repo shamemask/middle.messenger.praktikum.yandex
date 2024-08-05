@@ -4,7 +4,7 @@ import * as Handlebars from 'handlebars';
 
 export type BlockProps = Record<string, any>;
 
-export class Block<TProps extends BlockProps = {}> {
+abstract class Block<TProps extends BlockProps = {}> {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
@@ -175,8 +175,7 @@ export class Block<TProps extends BlockProps = {}> {
     this.addAttributes();
   }
 
-  render() {
-  }
+  abstract render(): string;
 
   getContent(): HTMLElement {
     return this.element!;
@@ -214,3 +213,5 @@ export class Block<TProps extends BlockProps = {}> {
     this.getContent().style.display = "none";
   }
 }
+
+export default Block;
