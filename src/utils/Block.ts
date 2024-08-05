@@ -30,15 +30,6 @@ export class Block<TProps extends BlockProps = {}> {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  _addEvents() {
-    const {events = {}} = this.props as { events: Record<string, EventListenerOrEventListenerObject> };
-    Object.keys(events).forEach(eventName => {
-      if (this._element) {
-        this._element.addEventListener(eventName, events[eventName])
-      }
-    });
-  }
-
   _registerEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
@@ -46,12 +37,21 @@ export class Block<TProps extends BlockProps = {}> {
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  _removeEvents(): void {
-    const {events = {}} = this.props as { events: Record<string, EventListenerOrEventListenerObject> };
 
-    Object.entries(events).forEach(([event, listener]) => {
+  _addEvents() {
+    const {events = {}} = this.props;
+    Object.keys(events).forEach(eventName => {
       if (this._element) {
-        this._element.removeEventListener(event, listener);
+        this._element.addEventListener(eventName, events[eventName]);
+      }
+    });
+  }
+
+  _removeEvents() {
+    const {events = {}} = this.props;
+    Object.keys(events).forEach(eventName => {
+      if (this._element) {
+        this._element.removeEventListener(eventName, events[eventName]);
       }
     });
   }
@@ -60,14 +60,14 @@ export class Block<TProps extends BlockProps = {}> {
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  _componentDidMount(oldProps: TProps) {
-    this.componentDidMount(oldProps);
+  _componentDidMount() {
+    this.componentDidMount();
     Object.values(this.children).forEach(child => {
       child.dispatchComponentDidMount();
     });
   }
 
-  componentDidMount(oldProps: TProps) {
+  componentDidMount(oldProps?: TProps) {
   }
 
   dispatchComponentDidMount() {
@@ -109,7 +109,9 @@ export class Block<TProps extends BlockProps = {}> {
 
     Object.entries(attr).forEach(([key, value]) => {
       if (this._element) {
-        this._element.setAttribute(key, String(value));
+        if (typeof value === "string") {
+          this._element.setAttribute(key, value);
+        }
       }
     });
   }
@@ -127,7 +129,7 @@ export class Block<TProps extends BlockProps = {}> {
   }
 
   _render() {
-    const propsAndStubs: Record<string, any> = {...this.props};
+    const propsAndStubs = {...this.props};
     const _tmpId = Math.floor(100000 + Math.random() * 900000);
     Object.entries(this.children).forEach(([key, child]) => {
       propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
@@ -165,6 +167,7 @@ export class Block<TProps extends BlockProps = {}> {
 
     const newElement = fragment.content.firstElementChild as HTMLElement;
     if (this._element && newElement) {
+      this._removeEvents();
       this._element.replaceWith(newElement);
     }
     this._element = newElement;
@@ -184,12 +187,12 @@ export class Block<TProps extends BlockProps = {}> {
 
     return new Proxy(props, {
       get(target, prop: string) {
-        const value = target[prop as keyof TProps];
+        const value = target[prop];
         return typeof value === "function" ? value.bind(target) : value;
       },
       set(target, prop: string, value) {
         const oldTarget = {...target};
-        target[prop as keyof TProps] = value;
+        target[prop] = value;
         self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
         return true;
       },
