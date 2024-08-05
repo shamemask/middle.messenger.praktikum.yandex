@@ -1,38 +1,69 @@
-class HTTPTransport {
-  get(url: string, options: any = {}) {
-    return this.request(url, { ...options, method: 'GET' });
-  }
+type Options = {
+  method?: string;
+  headers?: Record<string, string>;
+  timeout?: number;
+  data?: any;
+};
 
-  post(url: string, options: any = {}) {
-    return this.request(url, { ...options, method: 'POST' });
-  }
+type HTTPMethod = (url: string, options?: Options) => Promise<unknown>;
 
-  put(url: string, options: any = {}) {
-    return this.request(url, { ...options, method: 'PUT' });
-  }
+const METHODS = {
+  GET: 'GET',
+  PUT: 'PUT',
+  POST: 'POST',
+  DELETE: 'DELETE',
+};
 
-  delete(url: string, options: any = {}) {
-    return this.request(url, { ...options, method: 'DELETE' });
-  }
+export class HTTPTransport {
+  get: HTTPMethod = (url, options = {}) => (
+    this.request(url, {...options, method: METHODS.GET}, options.timeout)
+  );
 
-  private request(url: string, options: any) {
-    const { method, data } = options;
+  put: HTTPMethod = (url, options = {}) => (
+    this.request(url, {...options, method: METHODS.PUT}, options.timeout)
+  );
+
+  post: HTTPMethod = (url, options = {}) => (
+    this.request(url, {...options, method: METHODS.POST}, options.timeout)
+  );
+
+  delete: HTTPMethod = (url, options = {}) => (
+    this.request(url, {...options, method: METHODS.DELETE}, options.timeout)
+  );
+
+  request(url: string, options: Options = {}, timeout = 5000): Promise<unknown> {
+    const {method = 'GET', headers = {}, data} = options;
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.open(method, url);
 
-      xhr.onload = () => resolve(xhr);
-      xhr.onerror = () => reject(xhr);
+      Object.entries(headers).forEach(([key, value]) => {
+        xhr.setRequestHeader(key, value);
+      });
 
-      if (method === 'GET' || !data) {
+      xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(xhr.response);
+        } else {
+          reject(new Error(xhr.statusText));
+        }
+      };
+
+      xhr.onerror = function () {
+        reject(new Error('Network Error'));
+      };
+
+      xhr.timeout = timeout;
+      xhr.ontimeout = function () {
+        reject(new Error('Request timed out'));
+      };
+
+      if (method === METHODS.GET || !data) {
         xhr.send();
       } else {
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify(data));
+        xhr.send(data);
       }
     });
   }
 }
-
-export default new HTTPTransport();
