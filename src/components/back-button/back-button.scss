@@ -1,0 +1,21 @@
+@import '../../assets/variables';
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 10%;
+  height: 100%;
+  background-color: #69676721;
+
+  svg {
+    top: 50%;
+    position: relative;
+    left: 40%;
+    background-color: #007aff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+  }
+}
