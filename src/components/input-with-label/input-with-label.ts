@@ -10,6 +10,8 @@ interface InputWithLabelProps {
   type?: string;
   text?: string;
   placeholder?: string;
+  value?: string;
+  disabled?: boolean;
 }
 
 class InputWithLabel extends Block {
@@ -18,9 +20,12 @@ class InputWithLabel extends Block {
       className: "input-field__element",
       type: props["type"],
       title: props["title"],
-      name: props["name"]
-    })
-    super({...props, input});
+      name: props["name"],
+      value: props["value"],
+      placeholder: props["placeholder"],
+      disabled: props["disabled"],
+    });
+    super({ ...props, input });
   }
 
   render() {

@@ -1,10 +1,16 @@
-import './chat-item.scss';
+import "./chat-item.scss";
 import Block from "../../utils/Block";
 import template from "./chat-item.hbs?raw";
 
+export interface ChatItemProps {
+  active: boolean;
+  chatName: string;
+  lastMessage: string;
+}
+
 class ChatItem extends Block {
-  constructor({...props}) {
-    super(props);
+  constructor(chatItemProps: ChatItemProps) {
+    super(chatItemProps);
   }
 
   render() {

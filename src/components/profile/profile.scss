@@ -1,0 +1,9 @@
+.profile {
+  padding: 20px;
+  font-weight: bold;
+
+  &__link {
+    color: $link-color;
+    text-decoration: none;
+  }
+}

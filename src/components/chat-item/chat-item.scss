@@ -1,69 +1,21 @@
 @import '../../assets/variables';
 
 .chat-item {
-  &__line {
-    background: $divider-line-color;
-    height: 1px;
-    margin: 2px 0;
-    padding: 0 10px;
+  padding: 15px;
+  border-bottom: 1px solid #e1e1e1;
+
+  &.active {
+    background-color: #e6f4ff;
   }
 
-  &__block {
-    box-sizing: border-box;
-    cursor: pointer;
-    display: grid;
-    gap: 0 10px;
-    grid-template:
-      "a n n" 13px
-      "a m u" 1fr
-      / 47px 1fr 50px;
-    height: 70px;
-    padding: 12px 10px;
-    width: 100%;
-
-    &--current {
-      background: $chat-list-current-bgcolor;
-      cursor: default;
-    }
+  p {
+    margin: 0;
+    font-weight: bold;
   }
 
-
-  &__name {
-    font-weight: $font-weight-semibold;
-    grid-area: n;
-  }
-
-  &__date {
-    float: right;
-    font: $font-nano;
-  }
-
-  &__message {
-    grid-area: m;
-  }
-
-  &__message-text {
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
-    font: $font-small;
-    -webkit-line-clamp: 2;
-    margin-top: 4px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  &__unread {
-    align-items: center;
-    background: $button-bgcolor;
-    border-radius: 50%;
-    color: $button-color;
-    display: flex;
-    font: $font-micro;
-    grid-area: u;
-    height: 20px;
-    justify-content: center;
-    margin-top: 14px;
-    place-self: end;
-    width: 20px;
+  span {
+    font-size: 12px;
+    color: #999;
   }
 }
+

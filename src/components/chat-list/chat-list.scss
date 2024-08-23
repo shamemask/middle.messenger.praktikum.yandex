@@ -1,7 +1,6 @@
 @import '../../assets/variables';
 
-.chat-list {
-  background: $chat-list-bgcolor;
-  height: 100%;
-  overflow: auto;
+.chats {
+  flex: 1;
+  overflow-y: auto;
 }
