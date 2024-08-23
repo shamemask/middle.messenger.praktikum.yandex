@@ -3,15 +3,22 @@ import { API_URL } from "../config";
 
 const authAPIInstance = new HTTPTransport();
 
+export interface ChangeProfileData {
+  display_name: string;
+  phone: string;
+  second_name: string;
+  email: string;
+  login: string;
+  first_name: string;
+}
+
+export interface ChangePasswordData {
+  oldPassword: string;
+  newPassword: string;
+}
+
 export const UsersAPI = {
-  changeProfile: (data: {
-    display_name: string;
-    phone: string;
-    second_name: string;
-    email: string;
-    login: string;
-    first_name: string;
-  }) =>
+  changeProfile: (data: ChangeProfileData) =>
     authAPIInstance.put(`${API_URL}/user/profile`, {
       data: JSON.stringify(data),
     }),
@@ -19,10 +26,7 @@ export const UsersAPI = {
     authAPIInstance.put(`${API_URL}/user/profile/avatar`, {
       data: JSON.stringify(data),
     }),
-  changePassword: (data: {
-    oldPassword: string | File;
-    newPassword: string | File;
-  }) =>
+  changePassword: (data: ChangePasswordData) =>
     authAPIInstance.put(`${API_URL}/user/password`, {
       data: JSON.stringify(data),
     }),

@@ -132,10 +132,27 @@ class RegisterPage extends Block<{}> {
     const isValid = validateForm(data);
 
     if (isValid) {
-      console.log(data);
-      window.location.href = '/profile';
+      AuthAPI.register({
+        login: data.login,
+        password: data.password,
+        first_name: data.first_name,
+        second_name: data.second_name,
+        email: data.email,
+        phone: data.phone,
+      }).then((r) => {
+        if (r instanceof Error) {
+          console.log(r.message);
+          showError("login", r.message);
+          return;
+        } else {
+          console.log(r);
+          localStorage.setItem("user", JSON.stringify(r));
+          event.preventDefault();
+          router.go("/settings");
+        }
+      });
     } else {
-      console.log('Validation failed');
+      console.log("Validation failed");
     }
   }
 
@@ -144,4 +161,4 @@ class RegisterPage extends Block<{}> {
   }
 }
 
-export default RegisterPage;
+export default connect(RegisterPage);

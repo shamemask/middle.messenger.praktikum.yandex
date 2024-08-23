@@ -211,6 +211,11 @@ abstract class Block<TProps extends BlockProps = {}> {
   hide() {
     this.getContent().style.display = "none";
   }
+
+  remove() {
+    this._element?.remove();
+    this._element = null;
+  }
 }
 
 export default Block;

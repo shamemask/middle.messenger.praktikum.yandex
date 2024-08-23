@@ -1,6 +1,6 @@
 @import '../../assets/variables';
 
-.profile-page {
+.settings-page {
   display: flex;
   flex-direction: column;
   height: 480px;
@@ -33,8 +33,6 @@
     justify-content: normal;
     margin-bottom: 15px;
     margin-top: 15px;
-
-
   }
 
   &__red {

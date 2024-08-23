@@ -1,3 +1,5 @@
+import Block from "./Block.ts";
+
 function isEqual(lhs: any, rhs: any): boolean {
   return lhs === rhs;
 }
@@ -11,7 +13,7 @@ function render(query: string, block: any): HTMLElement {
 class Route {
   private _pathname: string;
   private _blockClass: any;
-  private _block: any;
+  private _block: Block | null = null;
   private _props: any;
 
   constructor(pathname: string, view: any, props: any) {

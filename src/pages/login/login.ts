@@ -10,9 +10,8 @@ import {
   PageTitle,
 } from "../../components";
 import { connect } from "../../utils/Hoc.ts";
-import { AuthAPI } from "../../api/AuthAPI.ts";
 import router from "../../utils/Router.ts";
-import { showError } from "../../utils/validator.ts";
+import { AuthData, handleUserAuthAndGo } from "../../utils/authHelper.ts";
 
 class Login extends Block {
   constructor() {
@@ -98,30 +97,11 @@ class LoginPage extends Block {
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
-    AuthAPI.getUser().then((user) => {
-      if (user instanceof Error) {
-        AuthAPI.login({
-          login: data.login,
-          password: data.password,
-        })
-          .then(() => {
-            // После успешной авторизации пытаемся получить данные о пользователе
-            return AuthAPI.getUser();
-          })
-          .then((userInfo) => {
-            console.log(userInfo); // Обработка данных о пользователе
-            this.saveUserGoSettings(userInfo, event);
-          })
-          .catch((error) => {
-            console.error("Error:", error); // Обработка ошибок
-            showError("login", error.message);
-            return;
-          });
-      } else {
-        console.log(user);
-        this.saveUserGoSettings(user, event);
-      }
-    });
+    const authData: AuthData = {
+      login: data.login as string,
+      password: data.password as string,
+    };
+    handleUserAuthAndGo(authData, event, "/settings");
   }
 
   render() {
