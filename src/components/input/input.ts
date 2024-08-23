@@ -1,6 +1,6 @@
-import Block from '../../utils/Block';
-import template from './input.hbs?raw';
-import './input.scss';
+import Block from "../../utils/Block";
+import template from "./input.hbs?raw";
+import "./input.scss";
 
 interface InputProps {
   className: string;
@@ -9,6 +9,7 @@ interface InputProps {
   name: string;
   value?: string;
   placeholder?: string;
+  disabled?: boolean;
 }
 
 class Input extends Block {

@@ -1,22 +1,26 @@
-import Block from '../../utils/Block';
-import template from './button.hbs?raw';
-import './button.scss';
+import Block from "../../utils/Block";
+import template from "./button.hbs?raw";
+import "./button.scss";
+import router from "../../utils/Router.ts";
 
 interface ButtonProps {
   className?: string;
   text: string;
-  page: string;
+  page?: string;
   type?: string;
   color?: string;
+  events?: {
+    click?: (event: Event) => void;
+  };
 }
 
 class Button extends Block {
   constructor(props: ButtonProps) {
     super({
-      ...props,
       events: {
         click: (event: Event) => this.navigate(event),
       },
+      ...props,
     });
   }
 
@@ -25,10 +29,10 @@ class Button extends Block {
   }
 
   private navigate(event: Event) {
-    const {page, type} = this.props as ButtonProps;
-    if (type !== 'submit') {
+    const { page, type } = this.props as ButtonProps;
+    if (type !== "submit" && page) {
       event.preventDefault();
-      window.location.href = `/${page}`;
+      router.go(`/${page}`);
     }
   }
 }

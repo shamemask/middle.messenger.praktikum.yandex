@@ -1,10 +1,10 @@
-import Block from '../../utils/Block';
-import template from './image.hbs?raw';
-import './image.scss';
+import Block from "../../utils/Block";
+import template from "./image.hbs?raw";
+import "./image.scss";
 
 interface ImageProps {
   className?: string;
-  avatar: string;
+  src: string;
   alt?: string;
 }
 

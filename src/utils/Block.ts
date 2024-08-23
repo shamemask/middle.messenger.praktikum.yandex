@@ -1,6 +1,6 @@
 //@ts-nocheck
 import EventBus from "./EventBus";
-import * as Handlebars from 'handlebars';
+import * as Handlebars from "handlebars";
 
 export type BlockProps = Record<string, any>;
 
@@ -9,7 +9,7 @@ abstract class Block<TProps extends BlockProps = {}> {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
     FLOW_CDU: "flow:component-did-update",
-    FLOW_RENDER: "flow:render"
+    FLOW_RENDER: "flow:render",
   };
 
   _element: HTMLElement | null = null;
@@ -21,7 +21,8 @@ abstract class Block<TProps extends BlockProps = {}> {
 
   constructor(propsWithChildren: TProps = {} as TProps) {
     const eventBus = new EventBus();
-    const {props, children, lists} = this._getChildrenPropsAndProps(propsWithChildren);
+    const { props, children, lists } =
+      this._getChildrenPropsAndProps(propsWithChildren);
     this.props = this._makePropsProxy(props) as TProps;
     this.children = children;
     this.lists = lists;
@@ -37,10 +38,9 @@ abstract class Block<TProps extends BlockProps = {}> {
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-
   _addEvents() {
-    const {events = {}} = this.props;
-    Object.keys(events).forEach(eventName => {
+    const { events = {} } = this.props;
+    Object.keys(events).forEach((eventName) => {
       if (this._element) {
         this._element.addEventListener(eventName, events[eventName]);
       }
@@ -48,8 +48,8 @@ abstract class Block<TProps extends BlockProps = {}> {
   }
 
   _removeEvents() {
-    const {events = {}} = this.props;
-    Object.keys(events).forEach(eventName => {
+    const { events = {} } = this.props;
+    Object.keys(events).forEach((eventName) => {
       if (this._element) {
         this._element.removeEventListener(eventName, events[eventName]);
       }
@@ -62,13 +62,12 @@ abstract class Block<TProps extends BlockProps = {}> {
 
   _componentDidMount() {
     this.componentDidMount();
-    Object.values(this.children).forEach(child => {
+    Object.values(this.children).forEach((child) => {
       child.dispatchComponentDidMount();
     });
   }
 
-  componentDidMount(oldProps?: TProps) {
-  }
+  componentDidMount(oldProps?: TProps) {}
 
   dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
@@ -101,11 +100,11 @@ abstract class Block<TProps extends BlockProps = {}> {
       }
     });
 
-    return {children, props, lists};
+    return { children, props, lists };
   }
 
   addAttributes() {
-    const {attr = {}} = this.props;
+    const { attr = {} } = this.props;
 
     Object.entries(attr).forEach(([key, value]) => {
       if (this._element) {
@@ -122,14 +121,14 @@ abstract class Block<TProps extends BlockProps = {}> {
     }
 
     Object.assign(this.props, nextProps);
-  }
+  };
 
   get element() {
     return this._element;
   }
 
   _render() {
-    const propsAndStubs = {...this.props};
+    const propsAndStubs = { ...this.props };
     const _tmpId = Math.floor(100000 + Math.random() * 900000);
     Object.entries(this.children).forEach(([key, child]) => {
       propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
@@ -139,11 +138,11 @@ abstract class Block<TProps extends BlockProps = {}> {
       propsAndStubs[key] = `<div data-id="__l_${_tmpId}"></div>`;
     });
 
-    const fragment = this._createDocumentElement('template');
+    const fragment = this._createDocumentElement("template");
     const template = Handlebars.compile(this.render());
 
     fragment.innerHTML = template(propsAndStubs);
-    Object.values(this.children).forEach(child => {
+    Object.values(this.children).forEach((child) => {
       const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
       if (stub) {
         stub.replaceWith(child.getContent());
@@ -151,8 +150,8 @@ abstract class Block<TProps extends BlockProps = {}> {
     });
 
     Object.entries(this.lists).forEach(([key, child]) => {
-      const listCont = this._createDocumentElement('template');
-      child.forEach(item => {
+      const listCont = this._createDocumentElement("template");
+      child.forEach((item) => {
         if (item instanceof Block) {
           listCont.content.append(item.getContent());
         } else {
@@ -175,7 +174,7 @@ abstract class Block<TProps extends BlockProps = {}> {
     this.addAttributes();
   }
 
-  abstract render(): string;
+  render(): string;
 
   getContent(): HTMLElement {
     return this.element!;
@@ -190,14 +189,14 @@ abstract class Block<TProps extends BlockProps = {}> {
         return typeof value === "function" ? value.bind(target) : value;
       },
       set(target, prop: string, value) {
-        const oldTarget = {...target};
+        const oldTarget = { ...target };
         target[prop] = value;
         self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
         return true;
       },
       deleteProperty() {
-        throw new Error('No access');
-      }
+        throw new Error("No access");
+      },
     });
   }
 
