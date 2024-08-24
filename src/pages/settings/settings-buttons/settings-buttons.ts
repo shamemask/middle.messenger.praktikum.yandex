@@ -18,11 +18,6 @@ class SettingsButtons extends Block {
       className: "settings-page__link",
       text: "Изменить пароль",
       url: "/change-password",
-      events: {
-        click: (event: Event) => {
-          event.preventDefault();
-        },
-      },
     });
 
     const hr7 = new Hr({ className: "settings-page__hr" });

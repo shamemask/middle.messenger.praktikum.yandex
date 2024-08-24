@@ -23,7 +23,7 @@ class SettingsInterface extends Block {
       alt: "opossum",
     });
 
-    const page_title = new PageTitle({ title: "Иван" });
+    const page_title = new PageTitle({ title: settingsData.first_name || "" });
 
     const email_with_label = new InputWithLabel({
       className: "settings-page__input",
