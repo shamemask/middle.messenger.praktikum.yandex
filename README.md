@@ -1,6 +1,8 @@
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Vanilla](https://img.shields.io/badge/Vanilla-000000?style=for-the-badge&logo=vanilla&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-4B4B4B?style=for-the-badge&logo=vite&logoColor=646CFF)
 ![Handlebars](https://img.shields.io/badge/Handlebars.js-f0772b?style=for-the-badge&logo=handlebarsdotjs&logoColor=white)
+![SCSS](https://img.shields.io/badge/SCSS-CC6633?style=for-the-badge&logo=scss&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 
 ## Описание
 
