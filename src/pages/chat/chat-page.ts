@@ -30,6 +30,7 @@ class ChatPage extends Block {
     const chat = new Chat();
 
     const dialogContent = new Interface({
+      className: "chat-page__interface",
       content: chat,
     });
 

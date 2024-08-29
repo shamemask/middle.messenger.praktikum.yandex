@@ -2,7 +2,6 @@ import Block from "../../utils/Block";
 import template from "./chat-input.hbs?raw";
 import "./chat-input.scss";
 import Input from "../input";
-import Button from "../button";
 
 class ChatInput extends Block {
   constructor() {
@@ -12,12 +11,7 @@ class ChatInput extends Block {
       name: "chat-input",
       placeholder: "Поиск",
     });
-    const input_button = new Button({
-      className: "chat-input__button",
-      type: "button",
-      text: "➤",
-    });
-    super({ input_search, input_button });
+    super({ input_search });
   }
 
   render() {

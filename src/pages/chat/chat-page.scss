@@ -3,4 +3,8 @@
 .chat-page {
   display: flex;
   height: 100vh;
+
+  &__interface {
+    width: 70vw;
+  }
 }

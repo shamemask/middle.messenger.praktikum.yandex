@@ -148,7 +148,7 @@ class RegisterPage extends Block<{}> {
           console.log(r);
           localStorage.setItem("user", JSON.stringify(r));
           event.preventDefault();
-          router.go("/settings");
+          router.go("/messenger");
         }
       });
     } else {

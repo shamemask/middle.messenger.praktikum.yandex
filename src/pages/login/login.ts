@@ -58,7 +58,7 @@ class LoginPage extends Block {
   constructor(props: any) {
     const data = store.getState();
     if (data.user) {
-      router.go("/settings");
+      router.go("/messenger");
       return;
     }
     const login = new Login();
@@ -80,7 +80,7 @@ class LoginPage extends Block {
         login: data.login as string,
         password: data.password as string,
       };
-      handleUserAuthAndGo(authData, event, "/settings");
+      handleUserAuthAndGo(authData, event, "/messenger");
     }
 
     super({

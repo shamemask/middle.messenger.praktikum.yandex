@@ -5,13 +5,13 @@ import Input from "../input";
 
 class Search extends Block {
   constructor() {
-    const input = new Input({
+    const input_search = new Input({
       className: "search__element",
       type: "text",
       name: "search",
       placeholder: "Поиск",
     });
-    super({ input });
+    super({ input_search });
   }
 
   render() {
