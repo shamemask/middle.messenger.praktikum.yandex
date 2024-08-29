@@ -1,2 +1,2 @@
-import './main.scss';
-export { default as Main } from './main.hbs?raw';
+import Main from './main';
+export default Main;

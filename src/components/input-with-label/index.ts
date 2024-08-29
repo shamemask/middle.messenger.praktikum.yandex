@@ -1,2 +1,3 @@
-import './input-with-label.scss';
-export { default as InputWithLabel } from './input-with-label.hbs?raw';
+import InputWithLabel from './input-with-label';
+
+export default InputWithLabel;

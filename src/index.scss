@@ -1,23 +1,24 @@
 @import './assets/variables';
 
 html, body {
-  padding: 0;
-  margin: 0;
   height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  font: $font-regular;
-  background-color: $text-bgcolor;
+  align-items: center;
+  background-color: $text-bg-color;
   color: $text-color;
   display: flex;
-  align-items: center;
+  font: $font-regular;
   justify-content: center;
 }
 
 a {
   color: $link-color;
   text-decoration: none;
+
   &:hover {
     text-decoration: underline;
   }
@@ -27,3 +28,4 @@ button {
   font-size: inherit;
   line-height: inherit;
 }
+

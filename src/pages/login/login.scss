@@ -1,8 +1,8 @@
 .login-page {
-  width: 280px;
-  height: 390px;
   display: flex;
   flex-direction: column;
+  height: 390px;
+  width: 280px;
 
   &__content {
     flex: 1;

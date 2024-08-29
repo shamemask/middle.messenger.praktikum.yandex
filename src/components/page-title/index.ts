@@ -1,2 +1,2 @@
-import './page-title.scss';
-export { default as PageTitle } from './page-title.hbs?raw';
+import PageTitle from './page-title';
+export default PageTitle;

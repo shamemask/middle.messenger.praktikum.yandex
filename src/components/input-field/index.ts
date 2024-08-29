@@ -1,2 +1,2 @@
-import './input-field.scss';
-export { default as InputField } from './input-field.hbs?raw';
+import InputField from './input-field';
+export default InputField;

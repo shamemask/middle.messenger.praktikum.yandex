@@ -1,8 +1,10 @@
+@import '../../assets/variables';
+
 .register-page {
-  width: 280px;
-  height: 480px;
   display: flex;
   flex-direction: column;
+  height: 480px;
+  width: 280px;
 
   &__content {
     flex: 1;
@@ -10,5 +12,9 @@
 
   &__input {
     margin-top: 16px;
+  }
+
+  &__error {
+    color: $text-red;
   }
 }

@@ -1,2 +1,3 @@
-import './image.scss';
-export { default as Image } from './image.hbs?raw';
+import Image from './image';
+
+export default Image;

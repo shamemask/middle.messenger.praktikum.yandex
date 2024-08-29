@@ -1,8 +1,9 @@
 declare module './pages' {
-    export const ChatPage: string;
-    export const LoginPage: string;
-    export const RegisterPage: string;
-    export const ProfilePage: string;
-    export const NotFoundPage: string;
-    export const ErrorPage: string;
+  import Block from "../utils/Block";
+  export const ChatPage: Block;
+  export const LoginPage: Block;
+  export const RegisterPage: Block;
+  export const ProfilePage: Block;
+  export const NotFoundPage: Block;
+  export const ErrorPage: Block;
 }
