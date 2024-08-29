@@ -14,9 +14,8 @@ export function connect<TProps extends BlockProps>(
       super({ ...props, ...store.getState() } as TProps);
 
       // Подписка на обновления стора
-      store.subscribe(() => {
-        console.log("We are in store subscription");
-        this.setProps({ ...store.getState() } as unknown as Partial<TProps>);
+      store.on("updated", () => {
+        this.setProps({ ...store.getState() } as TProps);
       });
 
       console.log(this);

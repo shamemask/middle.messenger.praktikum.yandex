@@ -9,6 +9,7 @@ import BackButton from "../../../components/back-button";
 import AcceptButtons from "../accept-buttons/accept-buttons.ts";
 import { ChangePasswordData, UsersAPI } from "../../../api/UsersAPI.ts";
 import ChangePasswordInterface from "../change-password-interface/change-password-interface.ts";
+import store from "../../../utils/Store.ts";
 
 interface FormData {
   [key: string]: string;
@@ -16,16 +17,15 @@ interface FormData {
 
 export class ChangePassword extends Block {
   constructor(props: any) {
-    const data = JSON.parse(localStorage.getItem("user") || "{}");
-    if (!data.login) {
-      localStorage.removeItem("user");
+    const data = store.getState();
+    if (!data.user) {
       router.go("/login");
       return;
     }
 
     const change_password_interface = new ChangePasswordInterface({
-      first_name: data.first_name?.trim() || "",
-      avatar: data.avatar?.trim() || "",
+      first_name: data.user.first_name,
+      avatar: data.user.avatar,
     });
 
     const accept_buttons = new AcceptButtons({
@@ -87,8 +87,8 @@ export class ChangePassword extends Block {
   }
 }
 
-class ChangePasswordPage extends Block<{}> {
-  constructor(props: any) {
+class ChangePasswordPage extends Block {
+  constructor() {
     const changePassword = new ChangePassword({});
 
     const dialogContent = new Interface({
@@ -100,7 +100,6 @@ class ChangePasswordPage extends Block<{}> {
     });
 
     super({
-      ...props,
       content,
     });
   }

@@ -12,6 +12,7 @@ import {
 import { connect } from "../../utils/Hoc.ts";
 import router from "../../utils/Router.ts";
 import { AuthData, handleUserAuthAndGo } from "../../utils/authHelper.ts";
+import store from "../../utils/Store.ts";
 
 class Login extends Block {
   constructor() {
@@ -55,7 +56,8 @@ class Login extends Block {
 
 class LoginPage extends Block {
   constructor(props: any) {
-    if (localStorage.getItem("user")) {
+    const data = store.getState();
+    if (data.user) {
       router.go("/settings");
       return;
     }
@@ -69,39 +71,25 @@ class LoginPage extends Block {
       content: dialogContent,
     });
 
+    function handleSubmit(event: Event) {
+      event.preventDefault();
+      const form = event.target as HTMLFormElement;
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      const authData: AuthData = {
+        login: data.login as string,
+        password: data.password as string,
+      };
+      handleUserAuthAndGo(authData, event, "/settings");
+    }
+
     super({
       ...props,
       content,
       events: {
-        submit: (event: Event) => this.handleSubmit(event),
+        submit: (event: Event) => handleSubmit(event),
       },
     });
-  }
-
-  saveUser(user: string | object | unknown) {
-    if (typeof user === "string") {
-      localStorage.setItem("user", user);
-    } else {
-      localStorage.setItem("user", JSON.stringify(user));
-    }
-  }
-
-  saveUserGoSettings(user: string | object | unknown, event: Event) {
-    this.saveUser(user);
-    event.preventDefault();
-    router.go("/settings");
-  }
-
-  handleSubmit(event: Event) {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-    const authData: AuthData = {
-      login: data.login as string,
-      password: data.password as string,
-    };
-    handleUserAuthAndGo(authData, event, "/settings");
   }
 
   render() {

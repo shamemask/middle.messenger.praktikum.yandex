@@ -3,6 +3,7 @@ import { Button, Hr, Link } from "../../../components";
 import Block from "../../../utils/Block.ts";
 import router from "../../../utils/Router.ts";
 import { AuthAPI } from "../../../api/AuthAPI.ts";
+import store from "../../../utils/Store.ts";
 
 class SettingsButtons extends Block {
   constructor() {
@@ -31,6 +32,9 @@ class SettingsButtons extends Block {
         click: (event: Event) => {
           localStorage.removeItem("user");
           AuthAPI.logout().then((r) => console.log(r));
+          store.setState({
+            user: null,
+          });
           event.preventDefault();
           router.go("/login");
         },

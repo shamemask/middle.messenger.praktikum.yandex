@@ -10,6 +10,7 @@ import SettingsInterface from "../settings-interface/settings-interface.ts";
 import AcceptButtons from "../accept-buttons/accept-buttons.ts";
 import { ChangeProfileData, UsersAPI } from "../../../api/UsersAPI.ts";
 import { saveUserGo } from "../../../utils/authHelper.ts";
+import store from "../../../utils/Store.ts";
 
 interface FormData {
   [key: string]: string;
@@ -17,21 +18,20 @@ interface FormData {
 
 export class ChangeData extends Block {
   constructor(props: any) {
-    const data = JSON.parse(localStorage.getItem("user") || "{}");
-    if (!data.login) {
-      localStorage.removeItem("user");
+    const data = store.getState();
+    if (!data || !data.user) {
       router.go("/login");
       return;
     }
 
     const settingsInterface = new SettingsInterface({
-      login: data.login?.trim() || "",
-      email: data.email?.trim() || "",
-      first_name: data.first_name?.trim() || "",
-      second_name: data.second_name?.trim() || "",
-      display_name: data.display_name?.trim() || "",
-      phone: data.phone?.trim() || "",
-      avatar: data.avatar?.trim() || "",
+      login: data.user.login,
+      email: data.user.email,
+      first_name: data.user.first_name,
+      second_name: data.user.second_name,
+      avatar: data.user.avatar,
+      phone: data.user.phone,
+      display_name: data.user.display_name,
       disabled: false,
     });
 

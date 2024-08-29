@@ -8,6 +8,7 @@ import router from "../../../utils/Router.ts";
 import BackButton from "../../../components/back-button";
 import SettingsInterface from "../settings-interface/settings-interface.ts";
 import SettingsButtons from "../settings-buttons/settings-buttons.ts";
+import store from "../../../utils/Store.ts";
 
 interface FormData {
   [key: string]: string;
@@ -15,21 +16,21 @@ interface FormData {
 
 export class Settings extends Block {
   constructor() {
-    const data = JSON.parse(localStorage.getItem("user") || "{}");
-    if (!data.login) {
-      localStorage.removeItem("user");
+    const data = store.getState();
+    if (!data.user) {
+      console.log("You are not authorized");
       router.go("/login");
       return;
     }
 
     const settingsInterface = new SettingsInterface({
-      login: data.login?.trim() || "",
-      email: data.email?.trim() || "",
-      first_name: data.first_name?.trim() || "",
-      second_name: data.second_name?.trim() || "",
-      display_name: data.display_name?.trim() || "",
-      phone: data.phone?.trim() || "",
-      avatar: data.avatar?.trim() || "",
+      login: data.user?.login || "",
+      email: data.user?.email || "",
+      first_name: data.user?.first_name.trim() || "",
+      second_name: data.user?.second_name.trim() || "",
+      display_name: data.user?.display_name.trim() || "",
+      phone: data.user?.phone.trim() || "",
+      avatar: data.user?.avatar || "",
       disabled: true,
     });
 
@@ -61,37 +62,37 @@ class SettingsPage extends Block<{}> {
       content: dialogContent,
     });
 
+    function handleBlur(event: Event) {
+      const { name, value } = event.target as HTMLInputElement;
+      validateField(name, value);
+    }
+
+    function handleSubmit(event: Event) {
+      event.preventDefault();
+      const form = event.target as HTMLFormElement;
+      const formData = new FormData(form);
+      const data: FormData = {};
+      formData.forEach((value, key) => {
+        data[key] = value as string;
+      });
+
+      const isValid = validateForm(data);
+
+      if (isValid) {
+        console.log(data);
+      } else {
+        console.log("Validation failed");
+      }
+    }
+
     super({
       ...props,
       content,
       events: {
-        submit: (event: Event) => this.handleSubmit(event),
-        blur: (event: Event) => this.handleBlur(event),
+        submit: (event: Event) => handleSubmit(event),
+        blur: (event: Event) => handleBlur(event),
       },
     });
-  }
-
-  handleBlur(event: Event) {
-    const { name, value } = event.target as HTMLInputElement;
-    validateField(name, value);
-  }
-
-  handleSubmit(event: Event) {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
-    const data: FormData = {};
-    formData.forEach((value, key) => {
-      data[key] = value as string;
-    });
-
-    const isValid = validateForm(data);
-
-    if (isValid) {
-      console.log(data);
-    } else {
-      console.log("Validation failed");
-    }
   }
 
   render() {

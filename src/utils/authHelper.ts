@@ -3,6 +3,7 @@
 import { AuthAPI } from "../api/AuthAPI.ts";
 import router from "./Router.ts";
 import { showError } from "./validator.ts";
+import store from "./Store.ts";
 
 export interface AuthData {
   login: string;
@@ -51,9 +52,10 @@ export function handleUserIsAuth(): Promise<string | object | unknown> {
 
 function saveUser(user: string | object | unknown) {
   if (typeof user === "string") {
-    localStorage.setItem("user", user);
+    const parsedUser = JSON.parse(user);
+    store.setState({ user: parsedUser });
   } else {
-    localStorage.setItem("user", JSON.stringify(user));
+    store.setState({ user });
   }
 }
 

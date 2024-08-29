@@ -18,12 +18,12 @@ class InputWithLabel extends Block {
   constructor(props: InputWithLabelProps) {
     const input = new Input({
       className: "input-field__element",
-      type: props["type"],
-      title: props["title"],
-      name: props["name"],
-      value: props["value"],
-      placeholder: props["placeholder"],
-      disabled: props["disabled"],
+      type: props.type || "",
+      title: props.title || "",
+      name: props.name || "",
+      value: props.value || "",
+      placeholder: props.placeholder || "",
+      disabled: props.disabled,
     });
     super({ ...props, input });
   }

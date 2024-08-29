@@ -1,12 +1,14 @@
 import Block from "./Block.ts";
+import store from "./Store.ts";
 
 function isEqual(lhs: any, rhs: any): boolean {
   return lhs === rhs;
 }
 
-function render(query: string, block: any): HTMLElement {
-  const root = document.getElementById(query) as HTMLElement;
+function render(query: string, block: Block): Element | null {
+  const root = document.getElementById(query) as Element;
   root.append(block.getContent());
+  // block.dispatchComponentDidMount();
   return root;
 }
 
@@ -15,6 +17,7 @@ class Route {
   private _blockClass: any;
   private _block: Block | null = null;
   private _props: any;
+  private _root: Element | null = null;
 
   constructor(pathname: string, view: any, props: any) {
     this._pathname = pathname;
@@ -31,8 +34,10 @@ class Route {
   }
 
   leave() {
-    if (this._block) {
-      this._block.hide();
+    if (this._root && this._block) {
+      if (this._root.contains(this._block.getContent())) {
+        this._root.removeChild(this._block.getContent());
+      }
     }
   }
 
@@ -41,13 +46,12 @@ class Route {
   }
 
   render() {
-    if (!this._block) {
-      this._block = new this._blockClass();
-      render(this._props.rootQuery, this._block);
+    this._block = new this._blockClass();
+
+    if (this._block) {
+      this._root = render(this._props.rootQuery, this._block);
       return;
     }
-
-    this._block.show();
   }
 }
 
@@ -93,17 +97,22 @@ class Router {
 
     const route = this.getRoute(pathname);
 
+    if (!route) {
+      this.go("/404");
+      return;
+    }
+
     if (this._currentRoute) {
       this._currentRoute.leave();
     }
 
     this._currentRoute = route;
-    route?.render();
+    route.render();
   }
 
   _isAuthenticated() {
     // Здесь можно использовать вызов AuthAPI.getUser() для проверки авторизации
-    return !!localStorage.getItem("user");
+    return !!store.getState().user;
   }
 
   go(pathname: string) {
