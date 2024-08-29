@@ -2,6 +2,7 @@ import "./index.scss";
 import {
   ChangeDataPage,
   ChangePasswordPage,
+  ChatPage,
   ErrorPage,
   LoginPage,
   NotFoundPage,
@@ -22,6 +23,7 @@ export default Router.use("/", loginPage)
   .use("/login", loginPage)
   .use("/sign-up", registerPage)
   .use("/settings", settingsPage)
+  .use("/messenger", ChatPage)
   .use("/change-data", changeDataPage)
   .use("/change-password", changePasswordPage)
   .use("/not-found", notFoundPage)

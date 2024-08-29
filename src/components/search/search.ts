@@ -3,19 +3,15 @@ import template from "./search.hbs?raw";
 import "./search.scss";
 import Input from "../input";
 
-interface SearchProps {
-  content: Block;
-}
-
 class Search extends Block {
-  constructor(props: SearchProps) {
+  constructor() {
     const input = new Input({
       className: "search__element",
       type: "text",
       name: "search",
       placeholder: "Поиск",
     });
-    super({ ...props, input });
+    super({ input });
   }
 
   render() {

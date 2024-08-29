@@ -1,4 +1,4 @@
-export { default as ChatPage } from "./chat/chat-page";
+export { default as ChatPage } from "./chat";
 export { default as LoginPage } from "./login";
 export { default as RegisterPage } from "./register";
 

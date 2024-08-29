@@ -4,12 +4,8 @@ import "./chat-input.scss";
 import Input from "../input";
 import Button from "../button";
 
-interface ChatInputProps {
-  content: Block;
-}
-
 class ChatInput extends Block {
-  constructor(props: ChatInputProps) {
+  constructor() {
     const input_search = new Input({
       className: "chat-input__element",
       type: "text",
@@ -21,7 +17,7 @@ class ChatInput extends Block {
       type: "button",
       text: "➤",
     });
-    super({ ...props, input_search, input_button });
+    super({ input_search, input_button });
   }
 
   render() {

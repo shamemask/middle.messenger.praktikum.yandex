@@ -3,7 +3,7 @@ import template from "./message.hbs?raw";
 import "./message.scss";
 import Image from "../image";
 
-interface MessageProps {
+export interface MessageProps {
   reply?: boolean;
   time?: string;
   content: string;
