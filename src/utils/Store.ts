@@ -1,56 +1,22 @@
-type Subscriber = (state: State) => void;
+import EventBus from "./EventBus.ts";
 
-interface Action {
-  type: string;
+export class Store extends EventBus {
+  private state: any;
 
-  [key: string]: any;
-}
-
-interface State {
-  buttonText: string;
-}
-
-type Reducer = (state: State, action: Action) => State;
-
-const createStore = (reducer: Reducer, initialState: State) => {
-  const subscribers: Subscriber[] = [];
-  let currentState = initialState;
-
-  return {
-    getState: (): State => currentState,
-    subscribe: (fn: Subscriber) => {
-      subscribers.push(fn);
-      fn(currentState);
-    },
-    dispatch: (action: Action) => {
-      currentState = reducer(currentState, action);
-      subscribers.forEach((fn) => fn(currentState));
-    },
-  };
-};
-
-const deepCopy = <T>(object: T): T => JSON.parse(JSON.stringify(object));
-
-const reducer: Reducer = (state, action) => {
-  let newState = deepCopy(state);
-  if (action.type === "SET_TEXT") {
-    console.log("SET_TEXT");
-    newState.buttonText = action.buttonText;
-    return newState;
-  } else {
-    return state;
+  constructor() {
+    super();
+    this.state = {};
   }
-};
 
-const state: State = {
-  buttonText: "Initial text",
-};
+  getState() {
+    return this.state;
+  }
 
-// const setTextAction: Action = {
-//   type: 'SET_TEXT',
-//   buttonText: ''
-// };
+  setState(newState: any) {
+    this.state = { ...this.state, ...newState };
+    this.emit("updated", this.state);
+  }
+}
 
-const store = Object.freeze(createStore(reducer, state));
-
+const store = new Store();
 export default store;
