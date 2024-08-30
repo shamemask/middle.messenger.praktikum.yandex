@@ -1,8 +1,8 @@
 @import '../../assets/variables';
 
 .chat-item {
-  padding: 15px;
   border-bottom: 1px solid #e1e1e1;
+  padding: 15px;
 
   &.active {
     background-color: #e6f4ff;
@@ -13,13 +13,13 @@
   }
 
   p {
-    margin: 0;
     font-weight: bold;
+    margin: 0;
   }
 
   span {
-    font-size: 12px;
     color: #999;
+    font-size: 12px;
   }
 }
 

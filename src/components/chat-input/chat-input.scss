@@ -2,10 +2,10 @@
 
 
 .chat-input {
+  background-color: #f9f9f9;
+  border-top: 1px solid #e1e1e1;
   display: flex;
   padding: 10px;
-  border-top: 1px solid #e1e1e1;
-  background-color: #f9f9f9;
 
   &__element {
     flex-grow: 1;
