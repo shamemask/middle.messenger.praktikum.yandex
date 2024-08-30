@@ -14,7 +14,7 @@ class ChatList extends Block {
       return new ChatItem(chatItemProps);
     });
 
-    super(chatList);
+    super({ chatList });
   }
 
   render() {

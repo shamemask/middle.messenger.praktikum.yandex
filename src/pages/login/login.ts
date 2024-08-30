@@ -49,7 +49,6 @@ class Login extends Block {
   }
 
   render() {
-    console.log(template);
     return template;
   }
 }

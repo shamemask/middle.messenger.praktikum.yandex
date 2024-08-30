@@ -9,9 +9,11 @@ class ChatInput extends Block {
       className: "chat-input__element",
       type: "text",
       name: "chat-input",
-      placeholder: "Поиск",
+      placeholder: "Написать сообщение...",
     });
-    super({ input_search });
+    super({
+      input_search,
+    });
   }
 
   render() {

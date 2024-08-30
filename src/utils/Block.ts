@@ -120,7 +120,16 @@ abstract class Block<TProps extends BlockProps = {}> {
       return;
     }
 
-    Object.assign(this.props, nextProps);
+    const { children, props, lists } =
+      this._getChildrenPropsAndProps(nextProps);
+    this.children = children;
+
+    this.lists = lists;
+    this.props = this._makePropsProxy(props);
+
+    this.eventBus().emit(Block.EVENTS.FLOW_CDU, this.props, nextProps);
+
+    this._render();
   };
 
   get element() {

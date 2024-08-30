@@ -5,10 +5,10 @@ import { ChatWindow, Interface, Main } from "../../components";
 import Sidebar from "../../components/sidebar";
 import { ChatInitializer } from "../../api/ChatInitializer.ts";
 import store from "../../utils/Store.ts";
+import { connect } from "../../utils/Hoc.ts";
 
 class Chat extends Block {
   constructor(props: any = {}) {
-    ChatInitializer.initChats();
     const chatList = store.getState().chatList || [];
 
     const sidebar = new Sidebar({ chatList });
@@ -16,8 +16,48 @@ class Chat extends Block {
     const messages = store.getState().messages || [];
 
     const chat_window = new ChatWindow({ messages });
-
     super({ ...props, sidebar, chat_window });
+  }
+
+  public static buildWindowSidebar(): {
+    sidebar: Sidebar;
+    chat_window: ChatWindow;
+  } {
+    const messages = store.getState().messages || [];
+    let chat_window_list: { [key: string]: any } = {};
+    if (messages.length) {
+      chat_window_list = messages.reduce((acc: any, message: any) => {
+        if (!acc[message.chatId]) {
+          acc[message.chatId] = [];
+        }
+        acc[message.chatId].push(new ChatWindow({ messages: [message] }));
+        return acc;
+      });
+    }
+
+    const chatList = store.getState().chatList || [];
+
+    chatList.map((chat: any) => {
+      if (chat_window_list[chat.chatId]) {
+        chat.chat_window = chat_window_list[chat.chatId][0];
+      } else {
+        chat.chat_window = new ChatWindow({ messages: [] });
+      }
+    });
+
+    const chat_window = new ChatWindow({ messages: messages[0] });
+
+    const sidebar = new Sidebar({
+      chatList,
+    });
+
+    return { sidebar, chat_window };
+  }
+
+  public async buildChats() {
+    await ChatInitializer.initChats();
+    const { sidebar, chat_window } = Chat.buildWindowSidebar();
+    this.setProps({ sidebar, chat_window });
   }
 
   render() {
@@ -26,7 +66,7 @@ class Chat extends Block {
 }
 
 class ChatPage extends Block {
-  constructor(props: any) {
+  constructor() {
     const chat = new Chat();
 
     const dialogContent = new Interface({
@@ -38,7 +78,13 @@ class ChatPage extends Block {
       content: dialogContent,
     });
 
-    super({ ...props, content });
+    super({ content });
+
+    chat.buildChats();
+
+    // this.setProps({
+    //   content,
+    // });
   }
 
   render() {
@@ -46,4 +92,4 @@ class ChatPage extends Block {
   }
 }
 
-export default ChatPage;
+export default connect(ChatPage);

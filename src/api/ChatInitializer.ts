@@ -6,22 +6,22 @@ export class ChatInitializer {
   /**
    * Метод для инициализации чатов: получение списка чатов и установка WebSocket соединения
    */
-  static async initChats() {
+  static async initChats(currentChatId?: string) {
     try {
       // Получаем список чатов
       const chatResponse = await ChatsAPI.getChats();
-
-      if ((chatResponse as Response).status === 200) {
-        const chatList = await (chatResponse as Response).json();
+      let chatList = [];
+      if (chatResponse) {
+        chatList = JSON.parse(chatResponse);
 
         // Сохраняем список чатов в Store
-        store.setState({ chatList });
+        store.setState({ chatList: chatList });
 
         // Если есть чаты, получаем токены и подключаемся по WebSocket
         if (chatList.length > 0) {
-          for (const chat of chatList) {
-            await ChatInitializer.initWebSocket(chat.id);
-          }
+          if (currentChatId) {
+            await ChatInitializer.initWebSocket(currentChatId);
+          } else await ChatInitializer.initWebSocket(chatList[0].id);
         }
       }
     } catch (error) {
@@ -33,18 +33,18 @@ export class ChatInitializer {
    * Метод для инициализации WebSocket соединения для конкретного чата
    * @param chatId ID чата, для которого устанавливается соединение
    */
-  static async initWebSocket(chatId: number) {
+  static async initWebSocket(chatId: string) {
     try {
       // Получаем токен для WebSocket соединения
       const tokenResponse = await ChatsAPI.getChatToken(chatId);
 
       const userId = store.getState().user.id;
 
-      if ((tokenResponse as Response).status === 200) {
-        const { token } = await (tokenResponse as Response).json();
+      if (tokenResponse) {
+        const token = JSON.parse(tokenResponse);
 
         // Устанавливаем WebSocket соединение
-        WebSocketService.connect(userId, chatId, token);
+        WebSocketService.connect(userId, chatId, token.token);
       }
     } catch (error) {
       console.error(`Error initializing WebSocket for chat ${chatId}:`, error);

@@ -1,4 +1,7 @@
-<div class="chat-item {{#if active}}active{{/if}}">
-  <p>{{chatName}}</p>
+<div class="chat-item"{{#if id}} with-id={{id}}{{/if}}{{#if avatar}} with-avatar{{/if}}{{#if
+  createdBy}} with-author={{createdBy}}{{/if}}
+  {{#if unreadCount}} unreadCount={{unreadCount}}{{/if}}{{#if active}} active{{/if}} onClick="{{onClick}}">
+  <p>{{title}}</p>
   <span>{{lastMessage}}</span>
 </div>
+

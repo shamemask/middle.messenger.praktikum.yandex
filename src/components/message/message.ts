@@ -8,6 +8,8 @@ export interface MessageProps {
   time?: string;
   content: string;
   avatar?: string;
+  author?: string;
+  id?: number;
 }
 
 class Message extends Block {

@@ -35,7 +35,9 @@ class Route {
 
   leave() {
     if (this._root && this._block) {
-      if (this._root.contains(this._block.getContent())) {
+      if (!this._block._element) {
+        this._root.innerHTML = "";
+      } else if (this._root.contains(this._block.getContent())) {
         this._root.removeChild(this._block.getContent());
       }
     }

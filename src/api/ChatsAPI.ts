@@ -8,7 +8,10 @@ export const ChatsAPI = {
   // Получение списка чатов
   getChats: (
     params: { offset?: number; limit?: number; title?: string } = {},
-  ) => chatsAPIInstance.get(`${API_URL}/chats`, { data: params }),
+  ) =>
+    chatsAPIInstance.get(`${API_URL}/chats`, {
+      data: params,
+    }) as Promise<string>,
 
   // Создание нового чата
   createChat: (data: { title: string }) =>
@@ -68,6 +71,8 @@ export const ChatsAPI = {
     chatsAPIInstance.delete(`${API_URL}/chats/users`, { data }),
 
   // Получение токена для подключения к серверу сообщений
-  getChatToken: (chatId: number) =>
-    chatsAPIInstance.post(`${API_URL}/chats/token/${chatId}`),
+  getChatToken: (chatId: string) =>
+    chatsAPIInstance.post(
+      `${API_URL}/chats/token/${chatId}`,
+    ) as Promise<string>,
 };
