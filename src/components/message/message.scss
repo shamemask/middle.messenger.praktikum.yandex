@@ -1,11 +1,11 @@
 @import '../../assets/variables';
 
 .message {
-  margin-bottom: 20px;
+  align-items: flex-start;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
   justify-content: flex-end;
+  margin-bottom: 20px;
 
   .message-content {
     background-color: #f9f9f9;
