@@ -40,13 +40,31 @@ export type CompleteUserData = {
 
 export const AuthAPI = {
   login: (data: AuthData) =>
-    authAPIInstance.post(`${API_URL}/auth/signin`, {
-      data: JSON.stringify(data),
-    }),
+    authAPIInstance
+      .post(`${API_URL}/auth/signin`, {
+        data: JSON.stringify(data),
+      })
+      .catch((error: Error) => {
+        console.error("Ошибка при выполнении login:", error);
+        throw error;
+      }),
   register: (data: UserDataWithPassword) =>
-    authAPIInstance.post(`${API_URL}/auth/signup`, {
-      data: JSON.stringify(data),
+    authAPIInstance
+      .post(`${API_URL}/auth/signup`, {
+        data: JSON.stringify(data),
+      })
+      .catch((error: Error) => {
+        console.error("Ошибка при выполнении register:", error);
+        throw error;
+      }),
+  logout: () =>
+    authAPIInstance.post(`${API_URL}/auth/logout`).catch((error: Error) => {
+      console.error("Ошибка при выполнении logout:", error);
+      throw error;
     }),
-  logout: () => authAPIInstance.post(`${API_URL}/auth/logout`),
-  getUser: () => authAPIInstance.get(`${API_URL}/auth/user`),
+  getUser: () =>
+    authAPIInstance.get(`${API_URL}/auth/user`).catch((error: Error) => {
+      console.error("Ошибка при выполнении getUser:", error);
+      throw error;
+    }),
 };
