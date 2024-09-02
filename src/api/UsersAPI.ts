@@ -1,5 +1,6 @@
 import { HTTPTransport } from "../utils/HTTPTransport";
 import { API_URL } from "../config";
+import { CompleteUserData } from "./AuthAPI.ts";
 
 const authAPIInstance = new HTTPTransport();
 
@@ -21,6 +22,7 @@ export const UsersAPI = {
   changeProfile: (data: ChangeProfileData) =>
     authAPIInstance
       .put(`${API_URL}/user/profile`, {
+        headers: { "Content-Type": "application/json" },
         data: JSON.stringify(data),
       })
       .catch((error: Error) => {
@@ -28,19 +30,25 @@ export const UsersAPI = {
         throw error;
       }),
 
-  changeAvatar: (data: { avatar: string | File }) =>
+  changeAvatar: (data: FormData) =>
     authAPIInstance
       .put(`${API_URL}/user/profile/avatar`, {
-        data: JSON.stringify(data),
+        data: data,
+      })
+      .then((data) => {
+        const userData = JSON.parse(data as string) as CompleteUserData; // Type assertion here
+        userData.avatar = `https://ya-praktikum.tech/api/v2/resources${userData.avatar}`;
+        return userData;
       })
       .catch((error: Error) => {
         console.error("Ошибка при выполнении changeAvatar:", error);
         throw error;
-      }),
+      }) as Promise<CompleteUserData>,
 
   changePassword: (data: ChangePasswordData) =>
     authAPIInstance
       .put(`${API_URL}/user/password`, {
+        headers: { "Content-Type": "application/json" },
         data: JSON.stringify(data),
       })
       .catch((error: Error) => {
@@ -51,10 +59,16 @@ export const UsersAPI = {
   searchUserByLogin: (data: { login: string | File }) =>
     authAPIInstance
       .post(`${API_URL}/user/search`, {
+        headers: { "Content-Type": "application/json" },
         data: JSON.stringify(data),
+      })
+      .then((data) => {
+        const userData = JSON.parse(data as string) as CompleteUserData; // Type assertion here
+        userData.avatar = `https://ya-praktikum.tech/api/v2/resources${userData.avatar}`;
+        return userData;
       })
       .catch((error: Error) => {
         console.error("Ошибка при выполнении searchUserByLogin:", error);
         throw error;
-      }),
+      }) as Promise<CompleteUserData>,
 };

@@ -25,16 +25,12 @@ export class HTTPTransport {
     this.request(url, { ...options, method: METHODS.GET }, options.timeout);
 
   put: HTTPMethod = (url, options = {}) =>
-    this.request(
-      url,
-      { headers: Headers, ...options, method: METHODS.PUT },
-      options.timeout,
-    );
+    this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
 
   post: HTTPMethod = (url, options = {}) =>
     this.request(
       url,
-      { headers: Headers, ...options, method: METHODS.POST },
+      { ...options, headers: Headers, method: METHODS.POST },
       options.timeout,
     );
 

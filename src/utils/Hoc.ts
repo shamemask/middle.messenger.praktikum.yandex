@@ -17,8 +17,6 @@ export function connect<TProps extends BlockProps>(
       store.on("updated", () => {
         this.setProps({ ...store.getState() } as TProps);
       });
-
-      console.log(this);
     }
   };
 }

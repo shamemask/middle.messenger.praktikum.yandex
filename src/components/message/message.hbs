@@ -1,10 +1,15 @@
 <div class="message {{#if reply}}reply{{/if}}" {{#if id}}data-message-id="{{id}}"{{/if}}>
-  <p class="message-author">{{author}}</p>
-  {{#if time}}
-    <p class="message-time">{{time}}</p>
-  {{/if}}
-  <div class="message-content">
-    <p>{{content}}</p>
+  <div class="message-info">
+    <p class="message-author">{{author}}</p>
+
+    <div class="message-content">
+      <p>{{content}}</p>
+    </div>
+    {{#if time}}
+      <p class="message-time">{{time}}</p>
+    {{/if}}
+  </div>
+  <div class="message-avatar">
     {{{ image }}}
   </div>
 </div>

@@ -2,6 +2,10 @@
 
 .message {
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-end;
 
   .message-content {
     background-color: #f9f9f9;

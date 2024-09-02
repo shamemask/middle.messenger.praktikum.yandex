@@ -6,6 +6,9 @@ interface ImageProps {
   className?: string;
   src: string;
   alt?: string;
+  events?: {
+    click?: (event: Event) => void;
+  };
 }
 
 class Image extends Block {

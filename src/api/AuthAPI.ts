@@ -63,8 +63,15 @@ export const AuthAPI = {
       throw error;
     }),
   getUser: () =>
-    authAPIInstance.get(`${API_URL}/auth/user`).catch((error: Error) => {
-      console.error("Ошибка при выполнении getUser:", error);
-      throw error;
-    }),
+    authAPIInstance
+      .get(`${API_URL}/auth/user`)
+      .then((data) => {
+        const userData = JSON.parse(data as string) as CompleteUserData; // Type assertion here
+        userData.avatar = `https://ya-praktikum.tech/api/v2/resources${userData.avatar}`;
+        return userData;
+      })
+      .catch((error: Error) => {
+        console.error("Ошибка при выполнении getUser:", error);
+        throw error;
+      }) as Promise<CompleteUserData>,
 };

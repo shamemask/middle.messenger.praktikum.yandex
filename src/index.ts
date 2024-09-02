@@ -1,5 +1,6 @@
 import "./index.scss";
 import {
+  ChangeAvatarPage,
   ChangeDataPage,
   ChangePasswordPage,
   ChatPage,
@@ -26,6 +27,7 @@ export default Router.use("/", loginPage)
   .use("/messenger", ChatPage)
   .use("/change-data", changeDataPage)
   .use("/change-password", changePasswordPage)
+  .use("/change-avatar", ChangeAvatarPage)
   .use("/not-found", notFoundPage)
   .use("/error", errorPage)
   .start();

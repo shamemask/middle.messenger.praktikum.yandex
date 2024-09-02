@@ -1,6 +1,9 @@
 import template from "./settings-interface.hbs?raw";
 import { Hr, Image, InputWithLabel, PageTitle } from "../../../components";
 import Block from "../../../utils/Block.ts";
+import router from "../../../utils/Router.ts";
+
+import "./settings-interface.scss";
 
 interface SettingsProps {
   login?: string;
@@ -21,6 +24,11 @@ class SettingsInterface extends Block {
       // avatar: "../assets/opossum_1.png",
       src: settingsData.avatar || "",
       alt: "opossum",
+      events: {
+        click: () => {
+          router.go("/change-avatar");
+        },
+      },
     });
 
     const page_title = new PageTitle({ title: settingsData.first_name || "" });

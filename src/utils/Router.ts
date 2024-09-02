@@ -100,7 +100,7 @@ class Router {
     const route = this.getRoute(pathname);
 
     if (!route) {
-      this.go("/404");
+      this.go("/not-found");
       return;
     }
 

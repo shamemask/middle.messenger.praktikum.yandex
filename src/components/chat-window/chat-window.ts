@@ -53,7 +53,7 @@ class ChatWindow extends Block {
             time: new Date().toLocaleTimeString(),
             id: store.getState().user.id,
             avatar: store.getState().user.avatar,
-            author: store.getState().user.name,
+            author: store.getState().user.display_name,
             reply: true,
           },
         ],

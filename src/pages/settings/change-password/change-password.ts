@@ -51,7 +51,7 @@ export class ChangePassword extends Block {
               .then((r) => {
                 if (r instanceof Error) {
                   console.log(r.message);
-                  showError("login", r.message);
+                  showError("old_password", r.message);
                   return;
                 } else {
                   console.log(r);
