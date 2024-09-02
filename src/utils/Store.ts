@@ -5,7 +5,10 @@ export class Store extends EventBus {
 
   constructor() {
     super();
-    this.state = {};
+
+    // Load state from localStorage if it exists, otherwise initialize to an empty object
+    const savedState = localStorage.getItem("appState");
+    this.state = savedState ? JSON.parse(savedState) : {};
   }
 
   getState() {
@@ -13,8 +16,14 @@ export class Store extends EventBus {
   }
 
   setState(newState: any) {
+    // Merge the new state with the current state
     this.state = { ...this.state, ...newState };
+
+    // Emit an event to notify that the state has been updated
     this.emit("updated", this.state);
+
+    // Save the new state to localStorage
+    localStorage.setItem("appState", JSON.stringify(this.state));
   }
 }
 
