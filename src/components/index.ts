@@ -15,3 +15,5 @@ export { default as Message } from "./message";
 export { default as ChatInput } from "./chat-input";
 export { default as ChatWindow } from "./chat-window";
 export { default as Container } from "./container";
+export { default as CreateChatForm } from "./create-chat-form";
+export { default as ChatMenu } from "./chat-menu";

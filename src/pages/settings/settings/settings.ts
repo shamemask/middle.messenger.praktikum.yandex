@@ -26,9 +26,9 @@ export class Settings extends Block {
     const settingsInterface = new SettingsInterface({
       login: data.user?.login || "",
       email: data.user?.email || "",
-      first_name: data.user?.first_name.trim() || "",
-      second_name: data.user?.second_name.trim() || "",
-      display_name: data.user?.display_name.trim() || "",
+      first_name: data.user?.first_name?.trim() || "",
+      second_name: data.user?.second_name?.trim() || "",
+      display_name: data.user?.display_name?.trim() || "",
       phone: data.user?.phone.trim() || "",
       avatar: data.user?.avatar || "",
       disabled: true,

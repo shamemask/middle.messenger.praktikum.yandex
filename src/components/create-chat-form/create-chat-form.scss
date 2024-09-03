@@ -1,0 +1,28 @@
+.create-chat-form {
+  margin: 10px 0;
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  input {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    padding: 8px;
+  }
+
+  button {
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    padding: 8px;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+}

@@ -2,7 +2,7 @@ import Block from "../../utils/Block";
 import template from "./chat-window.hbs?raw";
 import "./chat-window.scss";
 import Message from "../message";
-import { ChatInput } from "../index.ts";
+import { ChatInput, ChatMenu } from "../index.ts";
 import { MessageProps } from "../message/message.ts";
 import store from "../../utils/Store.ts";
 import { ChatInitializer } from "../../api/ChatInitializer.ts";
@@ -10,6 +10,7 @@ import WebSocketService from "../../api/WebSocketService.ts";
 
 interface MessagesProps {
   messages: MessageProps[] | [];
+  chatId: number;
 }
 
 class ChatWindow extends Block {
@@ -17,6 +18,10 @@ class ChatWindow extends Block {
     if (!props.messages) {
       props.messages = [];
     }
+    const chat_menu = new ChatMenu({
+      chatId: props.chatId,
+    });
+
     const messages = props.messages.map((message) => {
       return new Message(message);
     });
@@ -24,6 +29,7 @@ class ChatWindow extends Block {
     const chat_input = new ChatInput();
 
     super({
+      chat_menu,
       messages,
       chat_input,
       events: {
@@ -67,14 +73,17 @@ class ChatWindow extends Block {
     }
   }
 
-  public async buildMessages(chatId: string) {
+  public async buildMessages(chatId: number) {
     await ChatInitializer.initChats(chatId);
-
+    const chat_menu = new ChatMenu({
+      chatId: chatId,
+    });
     const messages = store.getState().messages || [];
     const newMessages = messages.map((message: MessageProps) => {
       return new Message(message);
     });
     this.setProps({
+      chat_menu,
       messages: newMessages,
       chat_input: new ChatInput(),
       events: { click: (event: Event) => this.sendMessage(event) },

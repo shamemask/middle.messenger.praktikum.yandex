@@ -4,7 +4,7 @@ class WebSocketService {
   private socket: WebSocket | null = null;
   private listeners: Record<string, ((data: any) => void)[]> = {};
 
-  connect(userId: number, chatId: string, token: string) {
+  connect(userId: number, chatId: number, token: string) {
     this.socket = new WebSocket(
       `wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`,
     );

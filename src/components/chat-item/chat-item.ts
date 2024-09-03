@@ -5,7 +5,7 @@ import { ChatWindow } from "../index.ts";
 import store from "../../utils/Store.ts";
 
 export interface ChatItemProps {
-  id: string;
+  id: number;
   title: string;
   avatar: string | null;
   createdBy: number;

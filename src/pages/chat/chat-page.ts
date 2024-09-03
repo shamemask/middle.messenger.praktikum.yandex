@@ -15,7 +15,9 @@ class Chat extends Block {
 
     const messages = store.getState().messages || [];
 
-    const chat_window = new ChatWindow({ messages });
+    const chatId = store.getState().activeChatId;
+
+    const chat_window = new ChatWindow({ messages, chatId: chatId });
     super({ ...props, sidebar, chat_window });
   }
 
@@ -24,13 +26,16 @@ class Chat extends Block {
     chat_window: ChatWindow;
   } {
     const messages = store.getState().messages || [];
+    const chatId = store.getState().activeChatId;
     let chat_window_list: { [key: string]: any } = {};
     if (messages.length) {
       chat_window_list = messages.reduce((acc: any, message: any) => {
         if (!acc[message.chatId]) {
           acc[message.chatId] = [];
         }
-        acc[message.chatId].push(new ChatWindow({ messages: [message] }));
+        acc[message.chatId].push(
+          new ChatWindow({ messages: [message], chatId: message.chatId }),
+        );
         return acc;
       });
     }
@@ -41,11 +46,17 @@ class Chat extends Block {
       if (chat_window_list[chat.chatId]) {
         chat.chat_window = chat_window_list[chat.chatId][0];
       } else {
-        chat.chat_window = new ChatWindow({ messages: [] });
+        chat.chat_window = new ChatWindow({
+          messages: [],
+          chatId: chat.chatId,
+        });
       }
     });
 
-    const chat_window = new ChatWindow({ messages: messages[0] });
+    const chat_window = new ChatWindow({
+      messages: messages,
+      chatId: chatId,
+    });
 
     const sidebar = new Sidebar({
       chatList,

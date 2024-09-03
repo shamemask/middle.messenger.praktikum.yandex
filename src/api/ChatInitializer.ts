@@ -6,7 +6,7 @@ export class ChatInitializer {
   /**
    * Метод для инициализации чатов: получение списка чатов и установка WebSocket соединения
    */
-  static async initChats(currentChatId?: string) {
+  static async initChats(currentChatId?: number) {
     try {
       // Получаем список чатов
       const chatResponse = await ChatsAPI.getChats();
@@ -33,7 +33,7 @@ export class ChatInitializer {
    * Метод для инициализации WebSocket соединения для конкретного чата
    * @param chatId ID чата, для которого устанавливается соединение
    */
-  static async initWebSocket(chatId: string) {
+  static async initWebSocket(chatId: number) {
     try {
       // Получаем токен для WebSocket соединения
       const tokenResponse = await ChatsAPI.getChatToken(chatId);

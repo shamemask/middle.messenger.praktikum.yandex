@@ -121,7 +121,10 @@ export const ChatsAPI = {
   // Добавление пользователей в чат
   addUsersToChat: (data: { users: number[]; chatId: number }) =>
     chatsAPIInstance
-      .put(`${API_URL}/chats/users`, { data })
+      .put(`${API_URL}/chats/users`, {
+        data: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
+      })
       .catch((error: Error) => {
         console.error("Ошибка при выполнении addUsersToChat:", error);
         throw error;
@@ -130,14 +133,17 @@ export const ChatsAPI = {
   // Удаление пользователей из чата
   removeUsersFromChat: (data: { users: number[]; chatId: number }) =>
     chatsAPIInstance
-      .delete(`${API_URL}/chats/users`, { data })
+      .delete(`${API_URL}/chats/users`, {
+        data: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
+      })
       .catch((error: Error) => {
         console.error("Ошибка при выполнении removeUsersFromChat:", error);
         throw error;
       }),
 
   // Получение токена для подключения к серверу сообщений
-  getChatToken: (chatId: string) =>
+  getChatToken: (chatId: number) =>
     chatsAPIInstance
       .post(`${API_URL}/chats/token/${chatId}`)
       .catch((error: Error) => {

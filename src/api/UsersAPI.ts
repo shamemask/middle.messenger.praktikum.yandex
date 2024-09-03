@@ -56,7 +56,7 @@ export const UsersAPI = {
         throw error;
       }),
 
-  searchUserByLogin: (data: { login: string | File }) =>
+  searchUserByLogin: (data: { login: string }) =>
     authAPIInstance
       .post(`${API_URL}/user/search`, {
         headers: { "Content-Type": "application/json" },
@@ -70,5 +70,5 @@ export const UsersAPI = {
       .catch((error: Error) => {
         console.error("Ошибка при выполнении searchUserByLogin:", error);
         throw error;
-      }) as Promise<CompleteUserData>,
+      }) as unknown as Promise<CompleteUserData[]>,
 };
