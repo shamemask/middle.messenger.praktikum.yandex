@@ -81,9 +81,11 @@ class ChatMenu extends Block {
         })
           .then(() => {
             console.log("User added successfully");
+            alert("Пользователь был добавлен в чат");
           })
           .catch((error) => {
             console.error("Failed to add user:", error);
+            alert("Пользователь не был добавлен в чат");
           });
       });
     } else if (form.classList.contains("remove-user-form")) {
@@ -106,9 +108,11 @@ class ChatMenu extends Block {
         })
           .then(() => {
             console.log("User removed successfully");
+            alert("Пользователь был удален из чата");
           })
           .catch((error) => {
             console.error("Failed to remove user:", error);
+            alert("Пользователь не был удален из чата");
           });
       });
     }
