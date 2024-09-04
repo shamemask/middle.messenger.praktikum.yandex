@@ -21,7 +21,7 @@ export const ChatsAPI = {
   // Создание нового чата
   createChat: (data: { title: string }) =>
     chatsAPIInstance
-      .post(`${API_URL}/chats`, { data })
+      .post(`${API_URL}/chats`, { data: JSON.stringify(data) })
       .catch((error: Error) => {
         console.error("Ошибка при выполнении createChat:", error);
         throw error;
