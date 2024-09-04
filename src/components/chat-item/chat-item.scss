@@ -3,6 +3,9 @@
 .chat-item {
   border-bottom: 1px solid #e1e1e1;
   padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   &.active {
     background-color: #e6f4ff;
@@ -10,6 +13,15 @@
 
   &:hover {
     background-color: #e6f4ff;
+  }
+
+  &__info {
+    width: 90%;
+  }
+
+  &__trash-bin {
+    cursor: pointer;
+    width: 10%;
   }
 
   p {

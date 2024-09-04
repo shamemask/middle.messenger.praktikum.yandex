@@ -9,6 +9,7 @@ import { connect } from "../../utils/Hoc.ts";
 import { ChatItemProps } from "../../components/chat-item/chat-item.ts";
 import webSocketService from "../../api/WebSocketService.ts";
 import { MessagesChatProps } from "../../components/chat-window/chat-window.ts";
+import { ChatsAPI, getChatsResponse } from "../../api/ChatsAPI.ts";
 
 class Chat extends Block {
   constructor(props: any = {}) {
@@ -61,6 +62,27 @@ class Chat extends Block {
           const target = event.target as HTMLElement;
           const chat = target.closest("div") as HTMLElement;
           const chatId: number = Number(chat.getAttribute("with-id"));
+
+          if (chat.classList.contains("chat-item__trash-bin")) {
+            chat.parentElement?.remove();
+            ChatsAPI.deleteChat({ chatId }).then(() => {
+              store.setState({
+                chatList: store
+                  .getState()
+                  .chatList.filter(
+                    (chat: getChatsResponse) => chat.id !== chatId,
+                  ),
+                messages: store
+                  .getState()
+                  .messages.filter(
+                    (message: MessagesChatProps) => message.chatId !== chatId,
+                  ),
+              });
+              console.log(`Chat ${chatId} deleted`);
+              alert(`Chat ${chatId} deleted`);
+            });
+            return;
+          }
           store.setState({ activeChatId: chatId });
           document.querySelectorAll(".chat-item").forEach((item) => {
             item.classList.remove("active");

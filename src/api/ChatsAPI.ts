@@ -46,7 +46,7 @@ export const ChatsAPI = {
   // Удаление чата по ID
   deleteChat: (data: { chatId: number }) =>
     chatsAPIInstance
-      .delete(`${API_URL}/chats`, { data })
+      .delete(`${API_URL}/chats`, { data: JSON.stringify(data) })
       .catch((error: Error) => {
         console.error("Ошибка при выполнении deleteChat:", error);
         throw error;
