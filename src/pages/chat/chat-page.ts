@@ -8,6 +8,7 @@ import store from "../../utils/Store.ts";
 import { connect } from "../../utils/Hoc.ts";
 import { ChatItemProps } from "../../components/chat-item/chat-item.ts";
 import webSocketService from "../../api/WebSocketService.ts";
+import { MessagesChatProps } from "../../components/chat-window/chat-window.ts";
 
 class Chat extends Block {
   constructor(props: any = {}) {
@@ -16,13 +17,18 @@ class Chat extends Block {
     const messages = store.getState().messages || [];
 
     const chatId = store.getState().activeChatId;
-    const chat_window = new ChatWindow({ messages, chatId: chatId });
+
+    const currentMessages = messages.find(
+      (message: MessagesChatProps) => message.chatId === chatId,
+    );
+    const chat_window = new ChatWindow(currentMessages);
     const sidebar = new Sidebar({
       chatList: chatList.map((chat: ChatItemProps) => {
         chat.events = {
           click: (event: Event) => {
             const target = event.target as HTMLElement;
-            const chatId: number = Number(target.getAttribute("with-id"));
+            const chat = target.closest("div") as HTMLElement;
+            const chatId: number = Number(chat.getAttribute("with-id"));
             store.setState({ activeChatId: chatId });
             target.classList.add("active");
             chat_window.buildMessages(chatId);
@@ -44,14 +50,21 @@ class Chat extends Block {
     const chatList = store.getState().chatList || [];
 
     const messages = store.getState().messages || [];
+    const currentMessages = messages.find(
+      (message: MessagesChatProps) => message.chatId === chatId,
+    );
 
-    const chat_window = new ChatWindow({ messages, chatId: chatId });
+    const chat_window = new ChatWindow(currentMessages);
     chatList.map((chat: ChatItemProps) => {
       chat.events = {
         click: (event: Event) => {
           const target = event.target as HTMLElement;
-          const chatId: number = Number(target.getAttribute("with-id"));
+          const chat = target.closest("div") as HTMLElement;
+          const chatId: number = Number(chat.getAttribute("with-id"));
           store.setState({ activeChatId: chatId });
+          document.querySelectorAll(".chat-item").forEach((item) => {
+            item.classList.remove("active");
+          });
           target.classList.add("active");
           webSocketService.close();
           chat_window.buildMessages(chatId);

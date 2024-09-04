@@ -8,21 +8,18 @@ import store from "../../utils/Store.ts";
 import { ChatInitializer } from "../../api/ChatInitializer.ts";
 import WebSocketService from "../../api/WebSocketService.ts";
 
-interface MessagesProps {
+export interface MessagesChatProps {
   messages: MessageProps[] | [];
   chatId: number;
 }
 
 class ChatWindow extends Block {
-  constructor(props: MessagesProps) {
-    if (!props.messages) {
-      props.messages = [];
-    }
+  constructor(props: MessagesChatProps) {
     const chat_menu = new ChatMenu({
-      chatId: props.chatId,
+      chatId: props?.chatId,
     });
 
-    const messages = props.messages.map((message) => {
+    const messages = props?.messages.map((message) => {
       return new Message(message);
     });
 
@@ -33,12 +30,13 @@ class ChatWindow extends Block {
       messages,
       chat_input,
       events: {
-        click: (event: Event) => this.sendMessage(event),
+        click: (event: Event, chatId: number) =>
+          this.sendMessage(event, chatId),
       },
     });
   }
 
-  sendMessage(event: Event) {
+  sendMessage(event: Event, chatId: number) {
     event.preventDefault();
 
     const button: HTMLElement | null =
@@ -50,19 +48,32 @@ class ChatWindow extends Block {
       store.setState({
         lastMessage: text.value,
       });
-      const messages = store.getState().messages || [];
+      const payload = {
+        content: text.value,
+        time: new Date().toLocaleTimeString(),
+        id: store.getState().user.id,
+        avatar: store.getState().user.avatar,
+        author: store.getState().user.display_name,
+        reply: true,
+      };
+      chatId = chatId ? chatId : store.getState().activeChatId;
+      let messages = store.getState().messages;
+      let currentMessage = messages.find(
+        (chat: { chatId: number }) => chat.chatId === chatId,
+      );
+      if (currentMessage) {
+        currentMessage.messages.push(payload);
+      } else if (messages.length > 0) {
+        messages[messages.length - 1].messages.push(payload);
+      } else {
+        messages.push({
+          chatId: chatId,
+          messages: [payload],
+        });
+      }
+
       store.setState({
-        messages: [
-          ...messages,
-          {
-            content: text.value,
-            time: new Date().toLocaleTimeString(),
-            id: store.getState().user.id,
-            avatar: store.getState().user.avatar,
-            author: store.getState().user.display_name,
-            reply: true,
-          },
-        ],
+        messages: messages,
       });
       console.log(text);
       WebSocketService.send("message", text.value);
@@ -75,18 +86,24 @@ class ChatWindow extends Block {
 
   public async buildMessages(chatId: number) {
     await ChatInitializer.initChats(chatId);
+    chatId = chatId ? chatId : store.getState().activeChatId;
     const chat_menu = new ChatMenu({
       chatId: chatId,
     });
     const messages = store.getState().messages || [];
-    const newMessages = messages.map((message: MessageProps) => {
-      return new Message(message);
-    });
+    const currentMessages = messages.find(
+      (message: MessagesChatProps) => message.chatId === chatId,
+    );
+    const newMessages = currentMessages?.messages.map(
+      (message: MessageProps) => {
+        return new Message(message);
+      },
+    );
     this.setProps({
       chat_menu,
       messages: newMessages,
       chat_input: new ChatInput(),
-      events: { click: (event: Event) => this.sendMessage(event) },
+      events: { click: (event: Event) => this.sendMessage(event, chatId) },
     });
   }
 

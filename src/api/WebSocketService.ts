@@ -27,8 +27,23 @@ class WebSocketService {
           chats: data,
         });
       } else if (type === "message") {
+        let messages = store.getState().messages;
+        let currentMessage = messages.find(
+          (chat: { chatId: number }) => chat.chatId === chatId,
+        );
+        if (currentMessage) {
+          currentMessage.messages.push(payload);
+        } else if (messages.length > 0) {
+          messages[messages.length - 1].messages.push(payload);
+        } else {
+          messages.push({
+            chatId: chatId,
+            messages: [payload],
+          });
+        }
+
         store.setState({
-          messages: [...store.getState().messages, payload],
+          messages: messages,
         });
       } else if (type === "ping") {
         store.setState({
