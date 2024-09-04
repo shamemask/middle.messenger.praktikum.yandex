@@ -3,8 +3,10 @@ import Block from "../../utils/Block";
 import template from "./chat-menu.hbs?raw";
 import { CompleteUserData } from "../../api/AuthAPI.ts";
 import { UsersAPI } from "../../api/UsersAPI.ts";
-import { ChatsAPI } from "../../api/ChatsAPI.ts";
+import { ChatsAPI, getChatsResponse } from "../../api/ChatsAPI.ts";
 import Button from "../button";
+import { PageTitle } from "../index.ts";
+import store from "../../utils/Store.ts";
 
 interface ChatMenuProps {
   chatId: number;
@@ -15,6 +17,11 @@ interface ChatMenuProps {
 
 class ChatMenu extends Block {
   constructor(props: ChatMenuProps) {
+    const chatList: getChatsResponse[] = store.getState().chatList || [];
+    const settingsData = chatList.find((chat) => chat.id === props.chatId);
+    const page_title = new PageTitle({
+      title: settingsData ? settingsData.title : "",
+    });
     const button_add_user = new Button({
       className: "add-user-button",
       text: "Добавить пользователя",
@@ -33,6 +40,7 @@ class ChatMenu extends Block {
       },
     });
     super({
+      page_title,
       button_add_user,
       button_remove_user,
       ...props,

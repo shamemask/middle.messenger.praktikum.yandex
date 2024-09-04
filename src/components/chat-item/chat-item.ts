@@ -1,8 +1,6 @@
 import "./chat-item.scss";
 import Block from "../../utils/Block";
 import template from "./chat-item.hbs?raw";
-import { ChatWindow } from "../index.ts";
-import store from "../../utils/Store.ts";
 
 export interface ChatItemProps {
   id: number;
@@ -12,21 +10,15 @@ export interface ChatItemProps {
   unreadCount: number;
   lastMessage: string | null;
   active?: boolean;
-
-  chat_window?: ChatWindow;
+  events?: {
+    click: (event: Event) => void;
+  };
 }
 
 class ChatItem extends Block {
   constructor(props: ChatItemProps) {
     super({
       ...props,
-      events: {
-        click: () => {
-          props.chat_window?.buildMessages(props.id);
-          store.setState({ activeChatId: props.id });
-          props.active = true;
-        },
-      },
     });
   }
 

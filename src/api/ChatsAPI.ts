@@ -4,6 +4,21 @@ import { API_URL } from "../config";
 // Установка базового URL для API
 const chatsAPIInstance = new HTTPTransport();
 
+interface createChatResponse {
+  id: number;
+}
+
+export interface getChatsResponse {
+  [key: string]: any;
+
+  id: number;
+  title: string;
+  avatar: string;
+  unread_count: number;
+  created_by: number;
+  last_message: any;
+}
+
 export const ChatsAPI = {
   // Получение списка чатов
   getChats: (
@@ -13,10 +28,11 @@ export const ChatsAPI = {
       .get(`${API_URL}/chats`, {
         data: params,
       })
+      .then((data) => JSON.parse(data as string) as getChatsResponse[])
       .catch((error: Error) => {
         console.error("Ошибка при выполнении getChats:", error);
         throw error;
-      }) as Promise<string>,
+      }) as Promise<getChatsResponse[]>,
 
   // Создание нового чата
   createChat: (data: { title: string }) =>
@@ -25,7 +41,7 @@ export const ChatsAPI = {
       .catch((error: Error) => {
         console.error("Ошибка при выполнении createChat:", error);
         throw error;
-      }),
+      }) as Promise<createChatResponse>,
 
   // Удаление чата по ID
   deleteChat: (data: { chatId: number }) =>

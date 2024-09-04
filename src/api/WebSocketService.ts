@@ -110,6 +110,12 @@ class WebSocketService {
     });
   }
 
+  close() {
+    if (this.socket) {
+      this.socket.close();
+    }
+  }
+
   send(type: string, payload: any) {
     if (this.socket) {
       this.socket.send(JSON.stringify({ type, payload }));

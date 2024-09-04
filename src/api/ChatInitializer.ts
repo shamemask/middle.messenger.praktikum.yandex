@@ -1,4 +1,4 @@
-import { ChatsAPI } from "./ChatsAPI";
+import { ChatsAPI, getChatsResponse } from "./ChatsAPI";
 import store from "../utils/Store";
 import WebSocketService from "./WebSocketService.ts";
 
@@ -10,9 +10,9 @@ export class ChatInitializer {
     try {
       // Получаем список чатов
       const chatResponse = await ChatsAPI.getChats();
-      let chatList = [];
+      let chatList: getChatsResponse[] = [];
       if (chatResponse) {
-        chatList = JSON.parse(chatResponse);
+        chatList = chatResponse;
 
         // Сохраняем список чатов в Store
         store.setState({ chatList: chatList });

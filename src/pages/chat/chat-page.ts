@@ -6,18 +6,32 @@ import Sidebar from "../../components/sidebar";
 import { ChatInitializer } from "../../api/ChatInitializer.ts";
 import store from "../../utils/Store.ts";
 import { connect } from "../../utils/Hoc.ts";
+import { ChatItemProps } from "../../components/chat-item/chat-item.ts";
+import webSocketService from "../../api/WebSocketService.ts";
 
 class Chat extends Block {
   constructor(props: any = {}) {
     const chatList = store.getState().chatList || [];
 
-    const sidebar = new Sidebar({ chatList });
-
     const messages = store.getState().messages || [];
 
     const chatId = store.getState().activeChatId;
-
     const chat_window = new ChatWindow({ messages, chatId: chatId });
+    const sidebar = new Sidebar({
+      chatList: chatList.map((chat: ChatItemProps) => {
+        chat.events = {
+          click: (event: Event) => {
+            const target = event.target as HTMLElement;
+            const chatId: number = Number(target.getAttribute("with-id"));
+            store.setState({ activeChatId: chatId });
+            target.classList.add("active");
+            chat_window.buildMessages(chatId);
+          },
+        };
+        return chat;
+      }),
+    });
+
     super({ ...props, sidebar, chat_window });
   }
 
@@ -25,41 +39,29 @@ class Chat extends Block {
     sidebar: Sidebar;
     chat_window: ChatWindow;
   } {
-    const messages = store.getState().messages || [];
     const chatId = store.getState().activeChatId;
-    let chat_window_list: { [key: string]: any } = {};
-    if (messages.length) {
-      chat_window_list = messages.reduce((acc: any, message: any) => {
-        if (!acc[message.chatId]) {
-          acc[message.chatId] = [];
-        }
-        acc[message.chatId].push(
-          new ChatWindow({ messages: [message], chatId: message.chatId }),
-        );
-        return acc;
-      });
-    }
 
     const chatList = store.getState().chatList || [];
 
-    chatList.map((chat: any) => {
-      if (chat_window_list[chat.chatId]) {
-        chat.chat_window = chat_window_list[chat.chatId][0];
-      } else {
-        chat.chat_window = new ChatWindow({
-          messages: [],
-          chatId: chat.chatId,
-        });
-      }
-    });
+    const messages = store.getState().messages || [];
 
-    const chat_window = new ChatWindow({
-      messages: messages,
-      chatId: chatId,
+    const chat_window = new ChatWindow({ messages, chatId: chatId });
+    chatList.map((chat: ChatItemProps) => {
+      chat.events = {
+        click: (event: Event) => {
+          const target = event.target as HTMLElement;
+          const chatId: number = Number(target.getAttribute("with-id"));
+          store.setState({ activeChatId: chatId });
+          target.classList.add("active");
+          webSocketService.close();
+          chat_window.buildMessages(chatId);
+        },
+      };
+      return chat;
     });
 
     const sidebar = new Sidebar({
-      chatList,
+      chatList: chatList,
     });
 
     return { sidebar, chat_window };
