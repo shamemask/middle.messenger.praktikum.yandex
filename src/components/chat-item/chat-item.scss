@@ -1,11 +1,11 @@
 @import '../../assets/variables';
 
 .chat-item {
+  align-items: center;
   border-bottom: 1px solid #e1e1e1;
-  padding: 15px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  padding: 15px;
 
   &.active {
     background-color: #e6f4ff;

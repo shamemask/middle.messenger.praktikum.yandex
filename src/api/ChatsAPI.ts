@@ -28,7 +28,14 @@ export const ChatsAPI = {
       .get(`${API_URL}/chats`, {
         data: params,
       })
-      .then((data) => JSON.parse(data as string) as getChatsResponse[])
+      .then((data) => {
+        const result = JSON.parse(data as string) as getChatsResponse[];
+        result.forEach((chat) => {
+          chat.avatar = `https://ya-praktikum.tech/api/v2/resources${chat.avatar}`;
+        });
+        console.log(result);
+        return result;
+      })
       .catch((error: Error) => {
         console.error("Ошибка при выполнении getChats:", error);
         throw error;
@@ -38,6 +45,7 @@ export const ChatsAPI = {
   createChat: (data: { title: string }) =>
     chatsAPIInstance
       .post(`${API_URL}/chats`, { data: JSON.stringify(data) })
+      .then((data) => JSON.parse(data as string) as createChatResponse)
       .catch((error: Error) => {
         console.error("Ошибка при выполнении createChat:", error);
         throw error;
@@ -46,7 +54,10 @@ export const ChatsAPI = {
   // Удаление чата по ID
   deleteChat: (data: { chatId: number }) =>
     chatsAPIInstance
-      .delete(`${API_URL}/chats`, { data: JSON.stringify(data) })
+      .delete(`${API_URL}/chats`, {
+        data: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
+      })
       .catch((error: Error) => {
         console.error("Ошибка при выполнении deleteChat:", error);
         throw error;

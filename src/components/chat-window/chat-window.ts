@@ -48,7 +48,7 @@ class ChatWindow extends Block {
       store.setState({
         lastMessage: text.value,
       });
-      const payload = {
+      const content = {
         content: text.value,
         time: new Date().toLocaleTimeString(),
         id: store.getState().user.id,
@@ -57,48 +57,45 @@ class ChatWindow extends Block {
         reply: true,
       };
       chatId = chatId ? chatId : store.getState().activeChatId;
-      let messages = store.getState().messages;
-      let currentMessage = messages.find(
-        (chat: { chatId: number }) => chat.chatId === chatId,
-      );
-      if (currentMessage) {
-        currentMessage.messages.push(payload);
-      } else if (messages.length > 0) {
-        messages[messages.length - 1].messages.push(payload);
-      } else {
-        messages.push({
-          chatId: chatId,
-          messages: [payload],
-        });
-      }
 
-      store.setState({
-        messages: messages,
-      });
       console.log(text);
-      WebSocketService.send("message", text.value);
+      WebSocketService.send("message", content);
       text.value = "";
       text.focus();
 
-      this.buildMessages(store.getState().activeChatId);
+      this.rebuildChat(chatId);
     }
   }
 
-  public async buildMessages(chatId: number) {
+  public async rebuildChat(chatId: number) {
     await ChatInitializer.initChats(chatId);
     chatId = chatId ? chatId : store.getState().activeChatId;
     const chat_menu = new ChatMenu({
       chatId: chatId,
     });
     const messages = store.getState().messages || [];
-    const currentMessages = messages.find(
-      (message: MessagesChatProps) => message.chatId === chatId,
-    );
-    const newMessages = currentMessages?.messages.map(
+    let currentMessages: MessagesChatProps;
+
+    if (!messages) {
+      currentMessages = {
+        messages: [],
+        chatId: chatId,
+      };
+    } else {
+      currentMessages = messages.find(
+        (message: MessagesChatProps) => message.chatId === chatId,
+      );
+    }
+    let newMessages: Message[] = currentMessages?.messages.map(
       (message: MessageProps) => {
         return new Message(message);
       },
     );
+
+    if (!newMessages) {
+      newMessages = [];
+    }
+
     this.setProps({
       chat_menu,
       messages: newMessages,

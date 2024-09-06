@@ -1,6 +1,7 @@
 import "./chat-item.scss";
 import Block from "../../utils/Block";
 import template from "./chat-item.hbs?raw";
+import { Image } from "../../components";
 
 export interface ChatItemProps {
   id: number;
@@ -17,8 +18,14 @@ export interface ChatItemProps {
 
 class ChatItem extends Block {
   constructor(props: ChatItemProps) {
+    const avatar = new Image({
+      className: "chat-item__avatar",
+      src: props.avatar || "",
+      alt: "Avatar",
+    });
     super({
       ...props,
+      avatar,
     });
   }
 

@@ -20,7 +20,7 @@ class WebSocketService {
 
     this.socket.addEventListener("message", (event) => {
       const data = JSON.parse(event.data);
-      const { type, payload } = data;
+      const { type, content } = data;
 
       if (Array.isArray(data)) {
         store.setState({
@@ -28,17 +28,18 @@ class WebSocketService {
         });
       } else if (type === "message") {
         let messages = store.getState().messages;
+        if (!messages) {
+          messages = [];
+        }
         let currentMessage = messages.find(
           (chat: { chatId: number }) => chat.chatId === chatId,
         );
         if (currentMessage) {
-          currentMessage.messages.push(payload);
-        } else if (messages.length > 0) {
-          messages[messages.length - 1].messages.push(payload);
+          currentMessage.messages.push(content);
         } else {
           messages.push({
             chatId: chatId,
-            messages: [payload],
+            messages: [content],
           });
         }
 
@@ -47,7 +48,7 @@ class WebSocketService {
         });
       } else if (type === "ping") {
         store.setState({
-          ping: payload,
+          ping: content,
         });
       } else if (type === "pong") {
         store.setState({
@@ -55,64 +56,64 @@ class WebSocketService {
         });
       } else if (type === "user connected") {
         store.setState({
-          userConnected: payload,
+          userConnected: content,
         });
       } else if (type === "user disconnected") {
         store.setState({
-          userConnected: payload,
+          userConnected: content,
         });
       } else if (type === "error") {
         store.setState({
-          error: payload,
+          error: content,
         });
       } else if (type === "notification") {
         store.setState({
-          notification: payload,
+          notification: content,
         });
       } else if (type === "message read") {
         store.setState({
-          messageRead: payload,
+          messageRead: content,
         });
       } else if (type === "message deleted") {
         store.setState({
-          messageDeleted: payload,
+          messageDeleted: content,
         });
       } else if (type === "message edited") {
         store.setState({
-          messageEdited: payload,
+          messageEdited: content,
         });
       } else if (type === "message pinned") {
         store.setState({
-          messagePinned: payload,
+          messagePinned: content,
         });
       } else if (type === "message unpinned") {
         store.setState({
-          messageUnpinned: payload,
+          messageUnpinned: content,
         });
       } else if (type === "chat deleted") {
         store.setState({
-          chatDeleted: payload,
+          chatDeleted: content,
         });
       } else if (type === "chat created") {
         store.setState({
-          chatCreated: payload,
+          chatCreated: content,
         });
       } else if (type === "chat updated") {
         store.setState({
-          chatUpdated: payload,
+          chatUpdated: content,
         });
       } else if (type === "chat renamed") {
         store.setState({
-          chatRenamed: payload,
+          chatRenamed: content,
         });
       } else if (type === "chat avatar updated") {
         store.setState({
-          chatAvatarUpdated: payload,
+          chatAvatarUpdated: content,
         });
       }
 
       if (this.listeners[type]) {
-        this.listeners[type].forEach((callback) => callback(payload));
+        this.listeners[type].forEach((callback) => callback(content));
       }
     });
 
@@ -131,9 +132,9 @@ class WebSocketService {
     }
   }
 
-  send(type: string, payload: any) {
+  send(type: string, content: any) {
     if (this.socket) {
-      this.socket.send(JSON.stringify({ type, payload }));
+      this.socket.send(JSON.stringify({ content: content, type: type }));
     }
   }
 
