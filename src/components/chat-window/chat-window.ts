@@ -49,62 +49,55 @@ class ChatWindow extends Block {
       store.setState({
         lastMessage: text.value,
       });
-      const content = {
-        content: text.value,
-        time: new Date().toLocaleTimeString(),
-        id: store.getState().user.id,
-        avatar: store.getState().user.avatar,
-        author: store.getState().user.display_name,
-        reply: true,
-      };
       chatId = chatId ? chatId : store.getState().activeChatId;
-
-      console.log(text);
-      WebSocketService.send("message", content);
-      text.value = "";
-      text.focus();
-
-      this.rebuildChat(chatId);
+      WebSocketService.send("message", text.value);
+      WebSocketService.getOldMessages();
+      setTimeout(async () => {
+        await this.rebuildChat(chatId);
+      }, 1000);
     }
   }
 
-  public async rebuildChat(chatId: number) {
+  public async initChat(chatId: number) {
     await ChatInitializer.initChats(chatId);
-
-    setTimeout(() => {
-      chatId = chatId ? chatId : store.getState().activeChatId;
-      const chat_menu = new ChatMenu({
-        chatId: chatId,
-      });
-      const users = store.getState().users;
-      const chats = store.getState().chats;
-      let newMessages: Message[] = chats.map((message: MessageModel) => {
-        const user = users?.find(
-          (user: CompleteUserData) => user.id === message.user_id,
-        );
-
-        const result: MessageProps = {
-          ...message,
-          author: user?.display_name,
-          avatar: user?.avatar,
-          time: new Date(message.time).toLocaleTimeString(),
-          reply: true,
-          id: message.id,
-        };
-        return new Message(result);
-      });
-
-      if (!newMessages) {
-        newMessages = [];
-      }
-
-      this.setProps({
-        chat_menu,
-        messages: newMessages,
-        chat_input: new ChatInput(),
-        events: { click: (event: Event) => this.sendMessage(event, chatId) },
-      });
+    setTimeout(async () => {
+      await this.rebuildChat(chatId);
     }, 1000);
+  }
+
+  public async rebuildChat(chatId: number) {
+    chatId = chatId ? chatId : store.getState().activeChatId;
+    const chat_menu = new ChatMenu({
+      chatId: chatId,
+    });
+    const users = store.getState().users;
+    const chats = store.getState().chats;
+    let newMessages: Message[] = chats.map((message: MessageModel) => {
+      const user = users?.find(
+        (user: CompleteUserData) => user.id === message.user_id,
+      );
+
+      const result: MessageProps = {
+        ...message,
+        author: user?.display_name,
+        avatar: user?.avatar,
+        time: new Date(message.time).toLocaleTimeString(),
+        reply: true,
+        id: message.id,
+      };
+      return new Message(result);
+    });
+
+    if (!newMessages) {
+      newMessages = [];
+    }
+
+    this.setProps({
+      chat_menu,
+      messages: newMessages,
+      chat_input: new ChatInput(),
+      events: { click: (event: Event) => this.sendMessage(event, chatId) },
+    });
   }
 
   render() {

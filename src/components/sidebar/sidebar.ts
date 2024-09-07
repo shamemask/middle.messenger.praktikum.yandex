@@ -75,7 +75,7 @@ class Sidebar extends Block {
           });
           target.classList.add("active");
           webSocketService.close();
-          chat_window.rebuildChat(chatId);
+          chat_window.initChat(chatId);
         },
       };
       return chat;

@@ -10,7 +10,6 @@ export interface MessageModel {
 
 class WebSocketService {
   private socket: WebSocket | null = null;
-  public getOldMessages: boolean = false;
 
   connect(userId: number, chatId: number, token: string) {
     this.socket = new WebSocket(
@@ -34,7 +33,6 @@ class WebSocketService {
           type: "get old",
         }),
       );
-      this.getOldMessages = false;
     };
 
     this.socket.onclose = (event) => {
@@ -59,7 +57,6 @@ class WebSocketService {
           chats: data,
         });
         console.log(data);
-        this.getOldMessages = true;
       }
 
       if (data.type == "pong") {
@@ -67,26 +64,7 @@ class WebSocketService {
       }
 
       if (data.type == "message") {
-        const { content } = data;
-        let messages = store.getState().messages;
-        if (!messages) {
-          messages = [];
-        }
-        let currentMessage = messages.find(
-          (chat: { chatId: number }) => chat.chatId === chatId,
-        );
-        if (currentMessage) {
-          currentMessage.messages.push(content);
-        } else {
-          messages.push({
-            chatId: chatId,
-            messages: [content],
-          });
-        }
-
-        store.setState({
-          messages: messages,
-        });
+        console.log(data);
       }
     };
   }
@@ -100,6 +78,17 @@ class WebSocketService {
   send(type: string, content: any) {
     if (this.socket) {
       this.socket.send(JSON.stringify({ content: content, type: type }));
+    }
+  }
+
+  getOldMessages() {
+    if (this.socket) {
+      this.socket.send(
+        JSON.stringify({
+          content: "0",
+          type: "get old",
+        }),
+      );
     }
   }
 
