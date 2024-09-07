@@ -34,6 +34,7 @@ class WebSocketService {
           type: "get old",
         }),
       );
+      this.getOldMessages = false;
     };
 
     this.socket.onclose = (event) => {
@@ -57,6 +58,7 @@ class WebSocketService {
         store.setState({
           chats: data,
         });
+        console.log(data);
         this.getOldMessages = true;
       }
 

@@ -70,39 +70,41 @@ class ChatWindow extends Block {
 
   public async rebuildChat(chatId: number) {
     await ChatInitializer.initChats(chatId);
-    chatId = chatId ? chatId : store.getState().activeChatId;
-    const chat_menu = new ChatMenu({
-      chatId: chatId,
-    });
-    const users = store.getState().users;
-    setTimeout(() => {}, 1000);
-    const chats = store.getState().chats;
-    let newMessages: Message[] = chats.map((message: MessageModel) => {
-      const user = users?.find(
-        (user: CompleteUserData) => user.id === message.user_id,
-      );
 
-      const result: MessageProps = {
-        ...message,
-        author: user?.display_name,
-        avatar: user?.avatar,
-        time: new Date(message.time).toLocaleTimeString(),
-        reply: true,
-        id: message.id,
-      };
-      return new Message(result);
-    });
+    setTimeout(() => {
+      chatId = chatId ? chatId : store.getState().activeChatId;
+      const chat_menu = new ChatMenu({
+        chatId: chatId,
+      });
+      const users = store.getState().users;
+      const chats = store.getState().chats;
+      let newMessages: Message[] = chats.map((message: MessageModel) => {
+        const user = users?.find(
+          (user: CompleteUserData) => user.id === message.user_id,
+        );
 
-    if (!newMessages) {
-      newMessages = [];
-    }
+        const result: MessageProps = {
+          ...message,
+          author: user?.display_name,
+          avatar: user?.avatar,
+          time: new Date(message.time).toLocaleTimeString(),
+          reply: true,
+          id: message.id,
+        };
+        return new Message(result);
+      });
 
-    this.setProps({
-      chat_menu,
-      messages: newMessages,
-      chat_input: new ChatInput(),
-      events: { click: (event: Event) => this.sendMessage(event, chatId) },
-    });
+      if (!newMessages) {
+        newMessages = [];
+      }
+
+      this.setProps({
+        chat_menu,
+        messages: newMessages,
+        chat_input: new ChatInput(),
+        events: { click: (event: Event) => this.sendMessage(event, chatId) },
+      });
+    }, 1000);
   }
 
   render() {

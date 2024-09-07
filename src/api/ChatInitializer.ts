@@ -51,18 +51,6 @@ export class ChatInitializer {
 
         // Устанавливаем WebSocket соединение
         WebSocketService.connect(userId, chatId, token.token);
-
-        function checkConnect() {
-          if (!WebSocketService.getOldMessages) {
-            setTimeout(() => {
-              checkConnect();
-            }, 10000);
-          } else {
-            console.log("Чат загружен");
-          }
-        }
-
-        checkConnect();
       }
     } catch (error) {
       console.error(`Error initializing WebSocket for chat ${chatId}:`, error);
