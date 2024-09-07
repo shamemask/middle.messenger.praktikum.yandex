@@ -37,7 +37,6 @@ export const UsersAPI = {
       })
       .then((data) => {
         const userData = JSON.parse(data as string) as CompleteUserData; // Type assertion here
-        userData.avatar = `https://ya-praktikum.tech/api/v2/resources${userData.avatar}`;
         return userData;
       })
       .catch((error: Error) => {
@@ -64,7 +63,6 @@ export const UsersAPI = {
       })
       .then((data) => {
         const userData = JSON.parse(data as string) as CompleteUserData; // Type assertion here
-        userData.avatar = `https://ya-praktikum.tech/api/v2/resources${userData.avatar}`;
         return userData;
       })
       .catch((error: Error) => {

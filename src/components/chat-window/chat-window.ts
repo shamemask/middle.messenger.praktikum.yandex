@@ -6,7 +6,8 @@ import { ChatInput, ChatMenu } from "../index.ts";
 import { MessageProps } from "../message/message.ts";
 import store from "../../utils/Store.ts";
 import { ChatInitializer } from "../../api/ChatInitializer.ts";
-import WebSocketService from "../../api/WebSocketService.ts";
+import WebSocketService, { MessageModel } from "../../api/WebSocketService.ts";
+import { CompleteUserData } from "../../api/AuthAPI.ts";
 
 export interface MessagesChatProps {
   messages: MessageProps[] | [];
@@ -73,24 +74,24 @@ class ChatWindow extends Block {
     const chat_menu = new ChatMenu({
       chatId: chatId,
     });
-    const messages = store.getState().messages || [];
-    let currentMessages: MessagesChatProps;
-
-    if (!messages) {
-      currentMessages = {
-        messages: [],
-        chatId: chatId,
-      };
-    } else {
-      currentMessages = messages.find(
-        (message: MessagesChatProps) => message.chatId === chatId,
+    const users = store.getState().users;
+    setTimeout(() => {}, 1000);
+    const chats = store.getState().chats;
+    let newMessages: Message[] = chats.map((message: MessageModel) => {
+      const user = users?.find(
+        (user: CompleteUserData) => user.id === message.user_id,
       );
-    }
-    let newMessages: Message[] = currentMessages?.messages.map(
-      (message: MessageProps) => {
-        return new Message(message);
-      },
-    );
+
+      const result: MessageProps = {
+        ...message,
+        author: user?.display_name,
+        avatar: user?.avatar,
+        time: new Date(message.time).toLocaleTimeString(),
+        reply: true,
+        id: message.id,
+      };
+      return new Message(result);
+    });
 
     if (!newMessages) {
       newMessages = [];

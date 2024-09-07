@@ -19,6 +19,23 @@ export interface getChatsResponse {
   last_message: any;
 }
 
+export interface getChatUsersResponse {
+  id: number;
+  first_name: string;
+  second_name: string;
+  display_name: string;
+  login: string;
+  avatar: string;
+  role: string;
+}
+
+export interface getChatFilesResponse {
+  id: number;
+  user_id: number;
+  path: string;
+  created_at: string;
+}
+
 export const ChatsAPI = {
   // Получение списка чатов
   getChats: (
@@ -30,9 +47,6 @@ export const ChatsAPI = {
       })
       .then((data) => {
         const result = JSON.parse(data as string) as getChatsResponse[];
-        result.forEach((chat) => {
-          chat.avatar = `https://ya-praktikum.tech/api/v2/resources${chat.avatar}`;
-        });
         console.log(result);
         return result;
       })
@@ -61,7 +75,7 @@ export const ChatsAPI = {
       .catch((error: Error) => {
         console.error("Ошибка при выполнении deleteChat:", error);
         throw error;
-      }),
+      }) as Promise<createChatResponse>,
 
   // Получение файлов, отправленных в чате
   getChatFiles: (chatId: number) =>
@@ -70,7 +84,7 @@ export const ChatsAPI = {
       .catch((error: Error) => {
         console.error("Ошибка при выполнении getChatFiles:", error);
         throw error;
-      }),
+      }) as Promise<getChatFilesResponse[]>,
 
   // Получение архивных чатов
   getArchivedChats: (
@@ -81,7 +95,7 @@ export const ChatsAPI = {
       .catch((error: Error) => {
         console.error("Ошибка при выполнении getArchivedChats:", error);
         throw error;
-      }),
+      }) as Promise<getChatsResponse[]>,
 
   // Архивирование чата
   archiveChat: (data: { chatId: number }) =>
@@ -112,7 +126,7 @@ export const ChatsAPI = {
 
   // Получение пользователей чата
   getChatUsers: (
-    chatId: number,
+    chatId: number | undefined,
     params: {
       offset?: number;
       limit?: number;
@@ -122,10 +136,11 @@ export const ChatsAPI = {
   ) =>
     chatsAPIInstance
       .get(`${API_URL}/chats/${chatId}/users`, { data: params })
+      .then((data) => JSON.parse(data as string) as getChatUsersResponse)
       .catch((error: Error) => {
         console.error("Ошибка при выполнении getChatUsers:", error);
         throw error;
-      }),
+      }) as Promise<getChatUsersResponse>,
 
   // Получение количества новых сообщений в чате
   getNewMessagesCount: (chatId: number) =>
@@ -134,7 +149,7 @@ export const ChatsAPI = {
       .catch((error: Error) => {
         console.error("Ошибка при выполнении getNewMessagesCount:", error);
         throw error;
-      }),
+      }) as Promise<number>,
 
   // Обновление аватара чата
   updateChatAvatar: (data: FormData) =>

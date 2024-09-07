@@ -1,8 +1,16 @@
 import store from "../utils/Store.ts";
 
+export interface MessageModel {
+  content: string;
+  time: string;
+  user_id: number;
+  id: number;
+  type: string;
+}
+
 class WebSocketService {
   private socket: WebSocket | null = null;
-  private listeners: Record<string, ((data: any) => void)[]> = {};
+  public getOldMessages: boolean = false;
 
   connect(userId: number, chatId: number, token: string) {
     this.socket = new WebSocket(
@@ -12,21 +20,52 @@ class WebSocketService {
       `Connecting to WebSocket server... ${userId}, ${chatId}, ${token}`,
     );
 
-    this.socket.addEventListener("open", () => {
-      console.log("WebSocket connection established");
-      // Пингуем сервер каждые 30 секунд, чтобы соединение не разрывалось
-      setInterval(() => this.sendPing(), 30000);
-    });
+    this.socket.onerror = () => {
+      console.error("Ошибка web socket");
+    };
 
-    this.socket.addEventListener("message", (event) => {
-      const data = JSON.parse(event.data);
-      const { type, content } = data;
+    this.socket.onopen = () => {
+      console.log("Соединение успешно установлено");
+      this.checkConnect();
 
-      if (Array.isArray(data)) {
+      this.socket?.send(
+        JSON.stringify({
+          content: "0",
+          type: "get old",
+        }),
+      );
+    };
+
+    this.socket.onclose = (event) => {
+      if (event.wasClean) {
+        console.log("Соединение успешно закрыто!");
+      } else {
+        console.error("Соединение сброшено!");
+      }
+      console.log(`Код: ${event.code} | Причина: ${event.reason}`);
+    };
+
+    this.socket.onmessage = (event) => {
+      let data = null;
+      try {
+        data = JSON.parse(event.data);
+      } catch {
+        throw new Error("Ошибка десериализации объекта");
+      }
+
+      if (data instanceof Array) {
         store.setState({
           chats: data,
         });
-      } else if (type === "message") {
+        this.getOldMessages = true;
+      }
+
+      if (data.type == "pong") {
+        return;
+      }
+
+      if (data.type == "message") {
+        const { content } = data;
         let messages = store.getState().messages;
         if (!messages) {
           messages = [];
@@ -46,84 +85,8 @@ class WebSocketService {
         store.setState({
           messages: messages,
         });
-      } else if (type === "ping") {
-        store.setState({
-          ping: content,
-        });
-      } else if (type === "pong") {
-        store.setState({
-          ping: null,
-        });
-      } else if (type === "user connected") {
-        store.setState({
-          userConnected: content,
-        });
-      } else if (type === "user disconnected") {
-        store.setState({
-          userConnected: content,
-        });
-      } else if (type === "error") {
-        store.setState({
-          error: content,
-        });
-      } else if (type === "notification") {
-        store.setState({
-          notification: content,
-        });
-      } else if (type === "message read") {
-        store.setState({
-          messageRead: content,
-        });
-      } else if (type === "message deleted") {
-        store.setState({
-          messageDeleted: content,
-        });
-      } else if (type === "message edited") {
-        store.setState({
-          messageEdited: content,
-        });
-      } else if (type === "message pinned") {
-        store.setState({
-          messagePinned: content,
-        });
-      } else if (type === "message unpinned") {
-        store.setState({
-          messageUnpinned: content,
-        });
-      } else if (type === "chat deleted") {
-        store.setState({
-          chatDeleted: content,
-        });
-      } else if (type === "chat created") {
-        store.setState({
-          chatCreated: content,
-        });
-      } else if (type === "chat updated") {
-        store.setState({
-          chatUpdated: content,
-        });
-      } else if (type === "chat renamed") {
-        store.setState({
-          chatRenamed: content,
-        });
-      } else if (type === "chat avatar updated") {
-        store.setState({
-          chatAvatarUpdated: content,
-        });
       }
-
-      if (this.listeners[type]) {
-        this.listeners[type].forEach((callback) => callback(content));
-      }
-    });
-
-    this.socket.addEventListener("close", () => {
-      console.log("WebSocket connection closed");
-    });
-
-    this.socket.addEventListener("error", (event) => {
-      console.error("WebSocket error:", event);
-    });
+    };
   }
 
   close() {
@@ -138,19 +101,15 @@ class WebSocketService {
     }
   }
 
-  sendPing() {
-    this.send("ping", {});
-  }
-
-  addListener(type: string, callback: (data: any) => void) {
-    if (!this.listeners[type]) {
-      this.listeners[type] = [];
-    }
-    this.listeners[type].push(callback);
-  }
-
-  removeListener(type: string, callback: (data: any) => void) {
-    this.listeners[type] = this.listeners[type].filter((cb) => cb !== callback);
+  checkConnect() {
+    setTimeout(() => {
+      this.socket?.send(
+        JSON.stringify({
+          type: "ping",
+        }),
+      );
+      this.checkConnect();
+    }, 5000);
   }
 }
 

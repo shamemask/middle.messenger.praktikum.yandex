@@ -17,6 +17,12 @@ export class ChatInitializer {
         // Сохраняем список чатов в Store
         store.setState({ chatList: chatList });
 
+        const users = await ChatsAPI.getChatUsers(
+          currentChatId ? currentChatId : chatList[0].id,
+        );
+
+        if (users) store.setState({ users: users });
+
         // Если есть чаты, получаем токены и подключаемся по WebSocket
         if (chatList.length > 0) {
           if (currentChatId) {
@@ -45,6 +51,18 @@ export class ChatInitializer {
 
         // Устанавливаем WebSocket соединение
         WebSocketService.connect(userId, chatId, token.token);
+
+        function checkConnect() {
+          if (!WebSocketService.getOldMessages) {
+            setTimeout(() => {
+              checkConnect();
+            }, 10000);
+          } else {
+            console.log("Чат загружен");
+          }
+        }
+
+        checkConnect();
       }
     } catch (error) {
       console.error(`Error initializing WebSocket for chat ${chatId}:`, error);
