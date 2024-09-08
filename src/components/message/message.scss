@@ -1,0 +1,35 @@
+@import '../../assets/variables';
+
+.message {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+
+  .message-content {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 15px;
+
+    img {
+      border-radius: 10px;
+      margin-top: 10px;
+      max-width: 100%;
+    }
+  }
+
+  &.reply {
+    text-align: right;
+
+    .message-content {
+      background-color: #d1e7ff;
+    }
+  }
+}
+
+.message-time {
+  color: #999;
+  font-size: 12px;
+  margin-bottom: 5px;
+}

@@ -1,16 +1,15 @@
-import Block from '../../utils/Block';
-import template from './404.hbs?raw';
-import './404.scss';
-import {Interface, Link, Main} from "../../components";
-
+import Block from "../../utils/Block";
+import template from "./404.hbs?raw";
+import "./404.scss";
+import { Interface, Link, Main } from "../../components";
+import { connect } from "../../utils/Hoc.ts";
 
 class NotFound extends Block {
   constructor(props: any = {}) {
-
     const login_link = new Link({
-      url: '/login',
+      url: "/login",
       text: "назад к чатам",
-      page: 'login'
+      page: "login",
     });
 
     super({
@@ -29,19 +28,19 @@ class NotFoundPage extends Block {
     const not_found = new NotFound();
 
     const dialogContent = new Interface({
-      content: not_found
+      content: not_found,
     });
 
     const content = new Main({
       content: dialogContent,
     });
 
-    super({...props, content});
+    super({ ...props, content });
   }
 
   render() {
-    return '{{{ content }}}';
+    return "{{{ content }}}";
   }
 }
 
-export default NotFoundPage;
+export default connect(NotFoundPage);

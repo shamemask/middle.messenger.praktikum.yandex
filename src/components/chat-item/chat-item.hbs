@@ -1,13 +1,17 @@
-<div class="chat-item">
-  <div class="chat-item__line"></div>
-  <div class="chat-item__block{{#if current}} chat-item__block--current{{/if}}">
-    {{#if avatar}}
-    <div>
-      {{> Image className="profile-page__image" avatar=avatar alt="opossum" }}
-    </div>
-    {{else }}
-    <div class="chat-item__avatar"></div>
-    {{/if}}
-    <div class="chat-item__message"><span class="chat-item__message-text">{{ message }}</span></div>
+<div class="chat-item"{{#if id}} with-id={{id}}{{/if}}{{#if avatar}} with-avatar{{/if}}{{#if
+  createdBy}} with-author={{createdBy}}{{/if}}
+  {{#if unreadCount}} unreadCount={{unreadCount}}{{/if}}{{#if active}} active{{/if}} onClick="{{onClick}}">
+  <div class="chat-item__avatar"{{#if id}} with-id={{id}}{{/if}}>
+    {{{ image }}}
+  </div>
+  <div class="chat-item__info"{{#if id}} with-id={{id}}{{/if}}>
+    <p>{{title}}</p>
+    <span>{{lastMessage}}</span>
+  </div>
+  <div class="chat-item__trash-bin"{{#if id}} with-id={{id}}{{/if}}>
+    <img src="https://cdn-icons-png.flaticon.com/128/5028/5028066.png" loading="lazy" alt="Trash bin "
+         title="Trash bin "
+         width="24" height="24">
   </div>
 </div>
+

@@ -1,0 +1,17 @@
+@import '../../assets/variables';
+
+.chat-window {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  width: 70%;
+
+  &__messages {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: auto;
+  }
+}

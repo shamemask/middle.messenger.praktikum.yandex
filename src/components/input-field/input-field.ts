@@ -1,6 +1,6 @@
-import Block from '../../utils/Block';
-import template from './input-field.hbs?raw';
-import './input-field.scss';
+import Block from "../../utils/Block";
+import template from "./input-field.hbs?raw";
+import "./input-field.scss";
 import Input from "../input";
 
 interface InputFieldProps {
@@ -16,9 +16,9 @@ class InputField extends Block {
       className: "input-field__element",
       type: props["type"],
       title: props["title"],
-      name: props["name"]
-    })
-    super({...props, input});
+      name: props["name"],
+    });
+    super({ ...props, input });
   }
 
   render() {

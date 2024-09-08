@@ -1,0 +1,21 @@
+@import '../../assets/variables';
+
+
+.chat-input {
+  background-color: #f9f9f9;
+  border-top: 1px solid #e1e1e1;
+  display: flex;
+  padding: 10px;
+
+  &__element {
+    flex-grow: 1;
+  }
+
+  svg {
+    background-color: #007aff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+  }
+}

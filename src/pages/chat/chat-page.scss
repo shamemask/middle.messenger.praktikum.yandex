@@ -1,11 +1,10 @@
 @import '../../assets/variables';
 
 .chat-page {
-  display: grid;
-  height: 100%;
-  width: 100%;
+  display: flex;
+  height: 100vh;
 
-  &__list {
-    border-right: 1px solid $divider-line-color;
+  &__interface {
+    width: 70vw;
   }
 }

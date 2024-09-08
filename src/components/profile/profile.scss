@@ -1,0 +1,11 @@
+@import '../../assets/variables';
+
+.profile {
+  font-weight: bold;
+  padding: 20px;
+
+  &__link {
+    color: $link-color;
+    text-decoration: none;
+  }
+}

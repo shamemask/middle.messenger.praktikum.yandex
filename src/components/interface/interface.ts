@@ -1,9 +1,10 @@
 //@ts-nocheck
-import Block from '../../utils/Block';
-import template from './interface.hbs?raw';
-import './interface.scss';
+import Block from "../../utils/Block";
+import template from "./interface.hbs?raw";
+import "./interface.scss";
 
 interface InterfaceProps {
+  className?: string;
   content: Block;
 }
 
