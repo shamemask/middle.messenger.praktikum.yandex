@@ -1,24 +1,23 @@
-import { resolve } from 'path';
-import { defineConfig } from 'vite';
-import handlebars from 'vite-plugin-handlebars';
-import path from 'path';
+import path from "path";
+import { defineConfig } from "vite";
+import handlebars from "vite-plugin-handlebars";
 
 export default defineConfig({
-  root: 'src',
+  root: "src",
   build: {
-    outDir: '../dist',
+    outDir: "../dist",
   },
   plugins: [handlebars()],
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "./src/styles/global.scss";`
-      }
-    }
+        additionalData: `@import "./src/styles/global.scss";`,
+      },
+    },
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
-    }
-  }
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
 });

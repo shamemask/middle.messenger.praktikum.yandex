@@ -1,2 +1,2 @@
-import ChatItem from './chat-item';
+import ChatItem from "./chat-item";
 export default ChatItem;

@@ -17,7 +17,7 @@ class EventBus {
     }
 
     this.listeners[event] = this.listeners[event].filter(
-      listener => listener !== callback
+      (listener) => listener !== callback,
     );
   }
 
@@ -26,7 +26,7 @@ class EventBus {
       throw new Error(`No such event: ${event}`);
     }
 
-    this.listeners[event].forEach(listener => listener(...args));
+    this.listeners[event].forEach((listener) => listener(...args));
   }
 }
 

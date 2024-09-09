@@ -4,13 +4,13 @@ import { Interface, Main } from "../../../components";
 import Block from "../../../utils/Block.ts";
 import { showError, validateForm } from "../../../utils/validator.ts";
 import { connect } from "../../../utils/Hoc.ts";
-import router from "../../../utils/Router.ts";
 import BackButton from "../../../components/back-button";
 import SettingsInterface from "../settings-interface/settings-interface.ts";
 import AcceptButtons from "../accept-buttons/accept-buttons.ts";
 import { ChangeProfileData, UsersAPI } from "../../../api/UsersAPI.ts";
 import { saveUserGo } from "../../../utils/authHelper.ts";
 import store from "../../../utils/Store.ts";
+import router from "../../../utils/activateRouter.ts";
 
 interface FormData {
   [key: string]: string;

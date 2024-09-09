@@ -71,13 +71,13 @@ class ChatMenu extends Block {
     }
     if (form.classList.contains("add-user-form")) {
       // получить данные пользователя
-      let userData: Promise<CompleteUserData[]>[] = [];
+      const userData: Promise<CompleteUserData[]>[] = [];
       userName.map((user: string) =>
         userData.push(UsersAPI.searchUserByLogin({ login: user })),
       );
       // преобразовать матрицу в массив
       Promise.all(userData).then((data: CompleteUserData[][]) => {
-        let users: number[] = [];
+        const users: number[] = [];
         data.forEach((usersArray: CompleteUserData[]) => {
           usersArray.forEach((user: CompleteUserData) => {
             users.push(user.id);
@@ -97,13 +97,13 @@ class ChatMenu extends Block {
           });
       });
     } else if (form.classList.contains("remove-user-form")) {
-      let userData: Promise<CompleteUserData[]>[] = [];
+      const userData: Promise<CompleteUserData[]>[] = [];
       userName.map((user: string) =>
         userData.push(UsersAPI.searchUserByLogin({ login: user })),
       );
       // преобразовать матрицу в массив
       Promise.all(userData).then((data: CompleteUserData[][]) => {
-        let users: number[] = [];
+        const users: number[] = [];
         data.forEach((usersArray: CompleteUserData[]) => {
           usersArray.forEach((user: CompleteUserData) => {
             users.push(user.id);

@@ -1,6 +1,6 @@
-import Block from '../../utils/Block';
-import template from './main.hbs?raw';
-import './main.scss';
+import Block from "../../utils/Block";
+import template from "./main.hbs?raw";
+import "./main.scss";
 
 interface MainProps {
   content: Block;

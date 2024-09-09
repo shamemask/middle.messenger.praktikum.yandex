@@ -10,9 +10,9 @@ import {
   PageTitle,
 } from "../../components";
 import { connect } from "../../utils/Hoc.ts";
-import router from "../../utils/Router.ts";
 import { AuthData, handleUserAuthAndGo } from "../../utils/authHelper.ts";
 import store from "../../utils/Store.ts";
+import router from "../../utils/activateRouter.ts";
 
 class Login extends Block {
   constructor() {

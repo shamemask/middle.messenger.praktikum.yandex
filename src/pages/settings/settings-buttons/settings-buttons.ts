@@ -1,9 +1,9 @@
 import template from "./settings-buttons.hbs?raw";
 import { Button, Hr, Link } from "../../../components";
 import Block from "../../../utils/Block.ts";
-import router from "../../../utils/Router.ts";
 import { AuthAPI } from "../../../api/AuthAPI.ts";
 import store from "../../../utils/Store.ts";
+import router from "../../../utils/activateRouter.ts";
 
 class SettingsButtons extends Block {
   constructor() {

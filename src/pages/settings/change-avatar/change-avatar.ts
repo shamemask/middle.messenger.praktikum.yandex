@@ -4,12 +4,12 @@ import { Interface, Main } from "../../../components";
 import Block from "../../../utils/Block.ts";
 import { showError } from "../../../utils/validator.ts";
 import { connect } from "../../../utils/Hoc.ts";
-import router from "../../../utils/Router.ts";
 import BackButton from "../../../components/back-button";
 import AcceptButtons from "../accept-buttons/accept-buttons.ts";
 import { UsersAPI } from "../../../api/UsersAPI.ts";
 import store from "../../../utils/Store.ts";
 import ChangeAvatarInterface from "../change-avatar-interface/change-avatar-interface.ts";
+import router from "../../../utils/activateRouter.ts";
 
 export class ChangeAvatar extends Block {
   constructor(props: any) {

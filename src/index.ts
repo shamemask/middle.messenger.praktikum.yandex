@@ -10,9 +10,8 @@ import {
   RegisterPage,
   SettingsPage,
 } from "./pages";
-import Router from "./utils/Router.ts";
+import router from "./utils/activateRouter";
 
-const router = new Router("app");
 const settingsPage = SettingsPage;
 const changeDataPage = ChangeDataPage;
 const registerPage = RegisterPage;
@@ -21,7 +20,7 @@ const errorPage = ErrorPage;
 const loginPage = LoginPage;
 const changePasswordPage = ChangePasswordPage;
 
-export default router
+router
   .use("/", loginPage)
   .use("/login", loginPage)
   .use("/sign-up", registerPage)

@@ -1,6 +1,6 @@
-import Block from '../../utils/Block';
-import template from './hr.hbs?raw';
-import './hr.scss';
+import Block from "../../utils/Block";
+import template from "./hr.hbs?raw";
+import "./hr.scss";
 
 interface HrProps {
   className?: string;

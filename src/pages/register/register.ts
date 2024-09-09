@@ -12,8 +12,8 @@ import {
 import Block from "../../utils/Block";
 import { showError, validateField, validateForm } from "../../utils/validator";
 import { connect } from "../../utils/Hoc.ts";
-import router from "../../utils/Router.ts";
 import { AuthAPI } from "../../api/AuthAPI.ts";
+import router from "../../utils/activateRouter.ts";
 
 interface FormData {
   [key: string]: string;

@@ -1,4 +1,4 @@
-@import '../../assets/variables';
+@import "../../assets/variables";
 
 .link {
   color: $link-color;
@@ -11,7 +11,6 @@
   text-align: center;
   text-decoration: none;
   width: 100%;
-
 
   &:hover {
     text-decoration: underline;

@@ -1,9 +1,7 @@
-// assuming AuthAPI is imported from another file
-
 import { AuthAPI } from "../api/AuthAPI.ts";
-import router from "./Router.ts";
 import { showError } from "./validator.ts";
 import store from "./Store.ts";
+import router from "../utils/activateRouter.ts";
 
 export interface AuthData {
   login: string;
