@@ -57,7 +57,7 @@ class Route {
   }
 }
 
-class Router {
+export class Router {
   private routes: Route[] = [];
   private history: History = window.history;
   private _currentRoute: Route | undefined | null = null;
@@ -135,4 +135,4 @@ class Router {
   }
 }
 
-export default new Router("app");
+export default Router;
