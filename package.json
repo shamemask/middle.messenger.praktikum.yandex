@@ -15,17 +15,17 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "lint-staged"
+      "pre-commit": "lint-staged && npm run test"
     }
   },
   "lint-staged": {
     "**/*.ts": [
-      "npm run checkTypes",
+      "eslint --fix",
+      "stylelint --fix",
       "git add"
     ],
     "**/*.scss": [
-      "npm run fixStyles",
+      "stylelint --fix",
       "git add"
     ]
   },

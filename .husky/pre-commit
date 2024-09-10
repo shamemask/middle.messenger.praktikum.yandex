@@ -1,1 +1,1 @@
-npm run checkTypes && npm run test
+lint-staged && npm run test
