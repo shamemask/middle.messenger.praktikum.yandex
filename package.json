@@ -21,13 +21,11 @@
   },
   "lint-staged": {
     "**/*.ts": [
-      "typecheck",
-      "fixEslint",
-      "fixStyles",
+      "npm run checkTypes",
       "git add"
     ],
     "**/*.scss": [
-      "fixStyles",
+      "npm run fixStyles",
       "git add"
     ]
   },
