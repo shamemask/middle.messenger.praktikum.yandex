@@ -1,4 +1,6 @@
-import { expect } from "chai";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import {expect} from "chai";
 import Block from "../Block";
 import Router from "../Router";
 

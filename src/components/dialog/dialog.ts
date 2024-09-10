@@ -1,4 +1,3 @@
-//@ts-nocheck
 import Block from "../../utils/Block";
 import template from "./dialog.hbs?raw";
 import "./dialog.scss";

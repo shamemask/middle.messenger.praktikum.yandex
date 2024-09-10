@@ -16,7 +16,7 @@ interface FormData {
 }
 
 export class ChangePassword extends Block {
-  constructor(props: any) {
+  constructor() {
     const data = store.getState();
     if (!data.user) {
       router.go("/login");
@@ -75,7 +75,6 @@ export class ChangePassword extends Block {
     const back_button = new BackButton();
 
     super({
-      ...props,
       change_password_interface,
       accept_buttons,
       back_button,
@@ -89,7 +88,7 @@ export class ChangePassword extends Block {
 
 class ChangePasswordPage extends Block {
   constructor() {
-    const changePassword = new ChangePassword({});
+    const changePassword = new ChangePassword();
 
     const dialogContent = new Interface({
       content: changePassword,

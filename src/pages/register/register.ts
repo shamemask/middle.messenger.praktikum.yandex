@@ -89,8 +89,8 @@ class Register extends Block {
   }
 }
 
-class RegisterPage extends Block<{}> {
-  constructor(props: any) {
+class RegisterPage extends Block {
+  constructor() {
     if (localStorage.getItem("user")) {
       router.go("/settings");
       return;
@@ -106,7 +106,6 @@ class RegisterPage extends Block<{}> {
     });
 
     super({
-      ...props,
       content,
       events: {
         submit: (event: Event) => this.handleSubmit(event),

@@ -5,16 +5,18 @@
   "scripts": {
     "dev": "vite --port 3000",
     "checkTypes": "npm run typecheck && npm run fixStyles && npm run fixEslint",
-    "fixEslint": "eslint . --fix",
+    "fixEslint": "eslint --config eslint.config.js . --fix",
     "typecheck": "tsc --noEmit",
     "fixStyles": "stylelint **/*.scss --fix",
     "build": "vite build",
     "test": "mocha --config=./.mocharc.json -n import=./mochaloader.js **/*.test.ts",
-    "start": "npm run test && vite build && vite preview --port 3000"
+    "start": "npm run checkTypes && npm run test && vite build && vite preview --port 3000",
+    "prepare": "husky"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run checkTypes && npm run test"
+      "pre-commit": "npm run checkTypes && npm run test",
+      "pre-push": "npm run checkTypes && npm run test"
     }
   },
   "devDependencies": {
@@ -26,6 +28,7 @@
     "@types/chai": "^4.3.19",
     "@types/mocha": "^10.0.7",
     "@types/uuid": "^10.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.5.0",
     "chai": "^5.1.1",
     "eslint": "^9.8.0",
     "husky": "^9.1.5",

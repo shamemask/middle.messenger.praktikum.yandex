@@ -7,7 +7,7 @@ export default [
   {
     rules: {
       "eol-last": "error",
-      "@typescript-eslint/ban-types": "warn",
+      "@typescript-eslint/no-explicit-any": "warn",
     },
   },
   { files: ["**/*.ts"] },

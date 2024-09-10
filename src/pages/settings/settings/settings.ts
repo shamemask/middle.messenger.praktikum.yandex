@@ -50,8 +50,8 @@ export class Settings extends Block {
   }
 }
 
-class SettingsPage extends Block<{}> {
-  constructor(props: any) {
+class SettingsPage extends Block {
+  constructor() {
     const settings = new Settings();
 
     const dialogContent = new Interface({
@@ -86,7 +86,6 @@ class SettingsPage extends Block<{}> {
     }
 
     super({
-      ...props,
       content,
       events: {
         submit: (event: Event) => handleSubmit(event),

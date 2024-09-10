@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import EventBus from "./EventBus";
 import handlebars from "handlebars";
 
@@ -5,7 +7,7 @@ const { compile: handlebarsCompile } = handlebars;
 
 export type BlockProps = Record<string, any>;
 
-class Block<TProps extends BlockProps = {}> {
+class Block<TProps extends BlockProps = any> {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
@@ -68,9 +70,7 @@ class Block<TProps extends BlockProps = {}> {
     });
   }
 
-  componentDidMount(oldProps?: TProps) {
-    oldProps;
-  }
+  componentDidMount(_oldProps?: TProps) {}
 
   dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
@@ -84,9 +84,7 @@ class Block<TProps extends BlockProps = {}> {
     this._render();
   }
 
-  componentDidUpdate(oldProps: TProps, newProps: TProps) {
-    oldProps;
-    newProps;
+  componentDidUpdate(_oldProps: TProps, _newProps: TProps) {
     return true;
   }
 
@@ -149,9 +147,8 @@ class Block<TProps extends BlockProps = {}> {
       propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
     });
 
-    Object.entries(this.lists).forEach(([key, child]) => {
-      propsAndStubs[key] = `<div data-id="__l_${_tmpId}"></div>`;
-      child;
+    Object.entries(this.lists).forEach(([_key, _child]) => {
+      propsAndStubs[_key] = `<div data-id="__l_${_tmpId}"></div>`;
     });
 
     const fragment = this._createDocumentElement("template");
@@ -165,10 +162,9 @@ class Block<TProps extends BlockProps = {}> {
       }
     });
 
-    Object.entries(this.lists).forEach(([key, child]) => {
-      key;
+    Object.entries(this.lists).forEach(([_key, _child]) => {
       const listCont = this._createDocumentElement("template");
-      child.forEach((item) => {
+      _child.forEach((item) => {
         if (item instanceof Block) {
           listCont.content.append(item.getContent());
         } else {
@@ -200,20 +196,18 @@ class Block<TProps extends BlockProps = {}> {
   }
 
   _makePropsProxy(props: TProps) {
-    const self = this;
-
     return new Proxy(props, {
-      get(target, prop: string) {
+      get: (target, prop: string) => {
         const value = target[prop];
         return typeof value === "function" ? value.bind(target) : value;
       },
-      set(target: Record<string, string>, prop: string, value) {
+      set: (target: Record<string, string>, prop: string, value) => {
         const oldTarget = { ...target };
         target[prop] = value;
-        self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
+        this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
         return true;
       },
-      deleteProperty() {
+      deleteProperty: () => {
         throw new Error("No access");
       },
     });

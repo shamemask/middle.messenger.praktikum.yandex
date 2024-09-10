@@ -1,4 +1,5 @@
-type Listeners = Record<string, Function[]>;
+/* eslint-disable @typescript-eslint/no-explicit-any */
+type Listeners = Record<string, Array<(...args: any[]) => void>>;
 
 class EventBus {
   private listeners: Listeners = {};

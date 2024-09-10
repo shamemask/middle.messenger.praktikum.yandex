@@ -5,7 +5,7 @@ import { Interface, Link, Main } from "../../components";
 import { connect } from "../../utils/Hoc.ts";
 
 class NotFound extends Block {
-  constructor(props: any = {}) {
+  constructor() {
     const login_link = new Link({
       url: "/login",
       text: "назад к чатам",
@@ -13,7 +13,6 @@ class NotFound extends Block {
     });
 
     super({
-      ...props,
       login_link,
     });
   }
@@ -24,7 +23,7 @@ class NotFound extends Block {
 }
 
 class NotFoundPage extends Block {
-  constructor(props: any) {
+  constructor() {
     const not_found = new NotFound();
 
     const dialogContent = new Interface({
@@ -35,7 +34,7 @@ class NotFoundPage extends Block {
       content: dialogContent,
     });
 
-    super({ ...props, content });
+    super({ content });
   }
 
   render() {

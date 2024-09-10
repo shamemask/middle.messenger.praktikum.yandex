@@ -54,7 +54,7 @@ class Login extends Block {
 }
 
 class LoginPage extends Block {
-  constructor(props: any) {
+  constructor() {
     const data = store.getState();
     if (data.user) {
       router.go("/messenger");
@@ -83,7 +83,6 @@ class LoginPage extends Block {
     }
 
     super({
-      ...props,
       content,
       events: {
         submit: (event: Event) => handleSubmit(event),

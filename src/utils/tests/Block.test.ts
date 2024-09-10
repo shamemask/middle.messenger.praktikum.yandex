@@ -1,4 +1,8 @@
-import { expect } from "chai";
+ 
+
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+
+import {expect} from "chai";
 import Block from "../Block";
 
 class TestBlock extends Block {

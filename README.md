@@ -3,6 +3,9 @@
 ![Handlebars](https://img.shields.io/badge/Handlebars.js-f0772b?style=for-the-badge&logo=handlebarsdotjs&logoColor=white)
 ![SCSS](https://img.shields.io/badge/SCSS-CC6633?style=for-the-badge&logo=scss&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-4B4B4B?style=for-the-badge&logo=eslint&logoColor=white)
+![Prettier](https://img.shields.io/badge/Prettier-4B4B4B?style=for-the-badge&logo=prettier&logoColor=white)
+![Husky](https://img.shields.io/badge/Husky-4B4B4B?style=for-the-badge&logo=husky&logoColor=white)
 
 ## Описание
 
@@ -25,12 +28,19 @@
 - WebSocket
 - SCSS
 - Handlebars (for templating)
+- ESLint
+- Prettier
+- Husky
+-
 
 ## Установка
 
-- `npm install` — установка стабильной версии,
-- `npm start` — запуск версии для разработчика,
-- `npm run build:prod` — сборка стабильной версии.
+1. `git clone [ссылка на репозиторий]` - клонировать репозиторий к себе на локальный компьютер.
+2. `npm run dev` - запустить проект в режиме разработки
+3. `npm run build` - собрать проект
+4. `npm run checkTypes` - запустить проверку типов
+5. `npm run test` - запустить автотесты
+6. `npm start` - запустить публичную версию проекта со всеми тестами
 
 ### **Команда**
 

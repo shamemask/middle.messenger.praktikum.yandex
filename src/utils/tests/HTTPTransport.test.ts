@@ -1,5 +1,7 @@
-import { expect } from "chai";
-import { HTTPTransport } from "../HTTPTransport"; // Путь к классу
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import {expect} from "chai";
+import {HTTPTransport} from "../HTTPTransport"; // Путь к классу
 
 (global as any).XMLHttpRequest = class {
   open = () => {};

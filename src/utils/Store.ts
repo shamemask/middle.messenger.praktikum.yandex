@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import EventBus from "./EventBus.ts";
 
 export class Store extends EventBus {

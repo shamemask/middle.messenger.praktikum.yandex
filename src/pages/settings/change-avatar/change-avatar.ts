@@ -12,7 +12,7 @@ import ChangeAvatarInterface from "../change-avatar-interface/change-avatar-inte
 import router from "../../../utils/activateRouter.ts";
 
 export class ChangeAvatar extends Block {
-  constructor(props: any) {
+  constructor() {
     const data = store.getState();
     if (!data.user) {
       router.go("/login");
@@ -66,7 +66,6 @@ export class ChangeAvatar extends Block {
     const back_button = new BackButton();
 
     super({
-      ...props,
       change_password_interface,
       accept_buttons,
       back_button,
@@ -80,7 +79,7 @@ export class ChangeAvatar extends Block {
 
 class ChangeAvatarPage extends Block {
   constructor() {
-    const changeAvatar = new ChangeAvatar({});
+    const changeAvatar = new ChangeAvatar();
 
     const dialogContent = new Interface({
       content: changeAvatar,

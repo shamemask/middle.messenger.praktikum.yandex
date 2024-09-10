@@ -9,14 +9,14 @@ interface createChatResponse {
 }
 
 export interface getChatsResponse {
-  [key: string]: any;
+  [key: string]: unknown;
 
   id: number;
   title: string;
   avatar: string;
   unread_count: number;
   created_by: number;
-  last_message: any;
+  last_message: unknown;
 }
 
 export interface getChatUsersResponse {

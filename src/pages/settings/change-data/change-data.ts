@@ -17,7 +17,7 @@ interface FormData {
 }
 
 export class ChangeData extends Block {
-  constructor(props: any) {
+  constructor() {
     const data = store.getState();
     if (!data || !data.user) {
       router.go("/login");
@@ -82,7 +82,6 @@ export class ChangeData extends Block {
     const back_button = new BackButton();
 
     super({
-      ...props,
       settingsInterface,
       accept_buttons,
       back_button,
@@ -94,9 +93,9 @@ export class ChangeData extends Block {
   }
 }
 
-class ChangeDataPage extends Block<{}> {
-  constructor(props: any) {
-    const changeData = new ChangeData({});
+class ChangeDataPage extends Block {
+  constructor() {
+    const changeData = new ChangeData();
 
     const dialogContent = new Interface({
       content: changeData,
@@ -107,7 +106,6 @@ class ChangeDataPage extends Block<{}> {
     });
 
     super({
-      ...props,
       content,
     });
   }

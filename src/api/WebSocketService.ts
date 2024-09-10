@@ -75,7 +75,7 @@ class WebSocketService {
     }
   }
 
-  send(type: string, content: any) {
+  send(type: string, content: unknown) {
     if (this.socket) {
       this.socket.send(JSON.stringify({ content: content, type: type }));
     }

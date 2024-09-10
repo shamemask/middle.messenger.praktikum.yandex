@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type Options = {
   method?: string;
   headers?: Record<string, string>;
