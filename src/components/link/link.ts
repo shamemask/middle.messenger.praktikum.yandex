@@ -1,7 +1,7 @@
 import Block from "../../utils/Block";
 import template from "./link.hbs?raw";
 import "./link.scss";
-import router from "../../utils/Router.ts";
+import router from "../../utils/activateRouter.ts";
 
 interface LinkProps {
   className?: string;

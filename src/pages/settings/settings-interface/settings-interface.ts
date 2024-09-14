@@ -1,9 +1,9 @@
 import template from "./settings-interface.hbs?raw";
 import { Hr, Image, InputWithLabel, PageTitle } from "../../../components";
 import Block from "../../../utils/Block.ts";
-import router from "../../../utils/Router.ts";
 
 import "./settings-interface.scss";
+import router from "../../../utils/activateRouter.ts";
 
 interface SettingsProps {
   login?: string;

@@ -1,7 +1,7 @@
 import Block from "../../utils/Block";
 import template from "./back-button.hbs?raw";
 import "./back-button.scss";
-import router from "../../utils/Router.ts";
+import router from "../../utils/activateRouter.ts";
 
 class BackButton extends Block {
   constructor() {

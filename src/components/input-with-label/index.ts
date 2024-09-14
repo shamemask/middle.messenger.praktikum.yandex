@@ -1,3 +1,3 @@
-import InputWithLabel from './input-with-label';
+import InputWithLabel from "./input-with-label";
 
 export default InputWithLabel;

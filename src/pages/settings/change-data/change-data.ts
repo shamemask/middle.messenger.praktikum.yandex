@@ -4,20 +4,20 @@ import { Interface, Main } from "../../../components";
 import Block from "../../../utils/Block.ts";
 import { showError, validateForm } from "../../../utils/validator.ts";
 import { connect } from "../../../utils/Hoc.ts";
-import router from "../../../utils/Router.ts";
 import BackButton from "../../../components/back-button";
 import SettingsInterface from "../settings-interface/settings-interface.ts";
 import AcceptButtons from "../accept-buttons/accept-buttons.ts";
 import { ChangeProfileData, UsersAPI } from "../../../api/UsersAPI.ts";
 import { saveUserGo } from "../../../utils/authHelper.ts";
 import store from "../../../utils/Store.ts";
+import router from "../../../utils/activateRouter.ts";
 
 interface FormData {
   [key: string]: string;
 }
 
 export class ChangeData extends Block {
-  constructor(props: any) {
+  constructor() {
     const data = store.getState();
     if (!data || !data.user) {
       router.go("/login");
@@ -82,7 +82,6 @@ export class ChangeData extends Block {
     const back_button = new BackButton();
 
     super({
-      ...props,
       settingsInterface,
       accept_buttons,
       back_button,
@@ -94,9 +93,9 @@ export class ChangeData extends Block {
   }
 }
 
-class ChangeDataPage extends Block<{}> {
-  constructor(props: any) {
-    const changeData = new ChangeData({});
+class ChangeDataPage extends Block {
+  constructor() {
+    const changeData = new ChangeData();
 
     const dialogContent = new Interface({
       content: changeData,
@@ -107,7 +106,6 @@ class ChangeDataPage extends Block<{}> {
     });
 
     super({
-      ...props,
       content,
     });
   }

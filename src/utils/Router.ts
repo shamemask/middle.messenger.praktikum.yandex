@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Block from "./Block.ts";
 import store from "./Store.ts";
 
-function isEqual(lhs: any, rhs: any): boolean {
+function isEqual(lhs: string, rhs: string): boolean {
   return lhs === rhs;
 }
 
@@ -14,7 +15,7 @@ function render(query: string, block: Block): Element | null {
 
 class Route {
   private _pathname: string;
-  private _blockClass: any;
+  private _blockClass: any;  
   private _block: Block | null = null;
   private _props: any;
   private _root: Element | null = null;
@@ -57,7 +58,7 @@ class Route {
   }
 }
 
-class Router {
+export class Router {
   private routes: Route[] = [];
   private history: History = window.history;
   private _currentRoute: Route | undefined | null = null;
@@ -135,4 +136,4 @@ class Router {
   }
 }
 
-export default new Router("app");
+export default Router;

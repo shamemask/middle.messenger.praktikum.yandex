@@ -12,8 +12,8 @@ import {
 import Block from "../../utils/Block";
 import { showError, validateField, validateForm } from "../../utils/validator";
 import { connect } from "../../utils/Hoc.ts";
-import router from "../../utils/Router.ts";
 import { AuthAPI } from "../../api/AuthAPI.ts";
+import router from "../../utils/activateRouter.ts";
 
 interface FormData {
   [key: string]: string;
@@ -89,8 +89,8 @@ class Register extends Block {
   }
 }
 
-class RegisterPage extends Block<{}> {
-  constructor(props: any) {
+class RegisterPage extends Block {
+  constructor() {
     if (localStorage.getItem("user")) {
       router.go("/settings");
       return;
@@ -106,7 +106,6 @@ class RegisterPage extends Block<{}> {
     });
 
     super({
-      ...props,
       content,
       events: {
         submit: (event: Event) => this.handleSubmit(event),

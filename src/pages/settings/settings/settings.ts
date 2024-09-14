@@ -4,11 +4,11 @@ import { Interface, Main } from "../../../components";
 import Block from "../../../utils/Block.ts";
 import { validateField, validateForm } from "../../../utils/validator.ts";
 import { connect } from "../../../utils/Hoc.ts";
-import router from "../../../utils/Router.ts";
 import BackButton from "../../../components/back-button";
 import SettingsInterface from "../settings-interface/settings-interface.ts";
 import SettingsButtons from "../settings-buttons/settings-buttons.ts";
 import store from "../../../utils/Store.ts";
+import router from "../../../utils/activateRouter.ts";
 
 interface FormData {
   [key: string]: string;
@@ -50,8 +50,8 @@ export class Settings extends Block {
   }
 }
 
-class SettingsPage extends Block<{}> {
-  constructor(props: any) {
+class SettingsPage extends Block {
+  constructor() {
     const settings = new Settings();
 
     const dialogContent = new Interface({
@@ -86,7 +86,6 @@ class SettingsPage extends Block<{}> {
     }
 
     super({
-      ...props,
       content,
       events: {
         submit: (event: Event) => handleSubmit(event),

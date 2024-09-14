@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json.schemastore.org/mocharc.json",
+  "extension": [
+    "ts"
+  ],
+  "require": [
+    "ts-node/register",
+    "./test/setupJsDom.js"
+  ],
+  "node-option": [
+    "experimental-specifier-resolution=node"
+  ]
+}

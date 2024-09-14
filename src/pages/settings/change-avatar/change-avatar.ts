@@ -4,15 +4,15 @@ import { Interface, Main } from "../../../components";
 import Block from "../../../utils/Block.ts";
 import { showError } from "../../../utils/validator.ts";
 import { connect } from "../../../utils/Hoc.ts";
-import router from "../../../utils/Router.ts";
 import BackButton from "../../../components/back-button";
 import AcceptButtons from "../accept-buttons/accept-buttons.ts";
 import { UsersAPI } from "../../../api/UsersAPI.ts";
 import store from "../../../utils/Store.ts";
 import ChangeAvatarInterface from "../change-avatar-interface/change-avatar-interface.ts";
+import router from "../../../utils/activateRouter.ts";
 
 export class ChangeAvatar extends Block {
-  constructor(props: any) {
+  constructor() {
     const data = store.getState();
     if (!data.user) {
       router.go("/login");
@@ -66,7 +66,6 @@ export class ChangeAvatar extends Block {
     const back_button = new BackButton();
 
     super({
-      ...props,
       change_password_interface,
       accept_buttons,
       back_button,
@@ -80,7 +79,7 @@ export class ChangeAvatar extends Block {
 
 class ChangeAvatarPage extends Block {
   constructor() {
-    const changeAvatar = new ChangeAvatar({});
+    const changeAvatar = new ChangeAvatar();
 
     const dialogContent = new Interface({
       content: changeAvatar,

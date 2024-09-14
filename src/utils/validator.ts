@@ -9,7 +9,6 @@ const validators: Record<string, RegExp> = {
   message: /.+/,
 };
 
-
 export function validateField(name: string, value: string): boolean {
   const regex = validators[name];
   if (regex) {
@@ -25,7 +24,6 @@ export function validateField(name: string, value: string): boolean {
   return true;
 }
 
-
 interface FormData {
   [key: string]: string;
 }
@@ -40,15 +38,14 @@ export function validateForm(data: FormData): boolean {
 
   // Check password match
   if (data.password !== data.repeat_password) {
-    showError('repeat_password', 'Passwords do not match');
+    showError("repeat_password", "Passwords do not match");
     isValid = false;
   } else {
-    hideError('repeat_password');
+    hideError("repeat_password");
   }
 
   return isValid;
 }
-
 
 export function showError(field: string, message: string) {
   const errorElement = document.querySelector(`#${field}-error`);
@@ -60,6 +57,6 @@ export function showError(field: string, message: string) {
 export function hideError(field: string) {
   const errorElement = document.querySelector(`#${field}-error`);
   if (errorElement) {
-    errorElement.textContent = '';
+    errorElement.textContent = "";
   }
 }

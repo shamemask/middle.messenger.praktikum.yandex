@@ -1,7 +1,7 @@
 import store from "./Store";
 import Block, { BlockProps } from "./Block.ts";
 
-type ComponentConstructor<TProps extends BlockProps = {}> = new (
+type ComponentConstructor<TProps extends BlockProps> = new (
   props: TProps,
 ) => Block<TProps>;
 

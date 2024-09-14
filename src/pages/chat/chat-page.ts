@@ -9,7 +9,7 @@ import { connect } from "../../utils/Hoc.ts";
 import { MessagesChatProps } from "../../components/chat-window/chat-window.ts";
 
 class Chat extends Block {
-  constructor(props: any = {}) {
+  constructor() {
     const chatList = store.getState().chatList || [];
 
     const messages = store.getState().messages || [];
@@ -25,7 +25,7 @@ class Chat extends Block {
       chat_window: chat_window,
     });
 
-    super({ ...props, sidebar, chat_window });
+    super({ sidebar, chat_window });
   }
 
   public static buildWindowSidebar(): {

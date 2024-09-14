@@ -10,9 +10,9 @@ import {
   PageTitle,
 } from "../../components";
 import { connect } from "../../utils/Hoc.ts";
-import router from "../../utils/Router.ts";
 import { AuthData, handleUserAuthAndGo } from "../../utils/authHelper.ts";
 import store from "../../utils/Store.ts";
+import router from "../../utils/activateRouter.ts";
 
 class Login extends Block {
   constructor() {
@@ -54,7 +54,7 @@ class Login extends Block {
 }
 
 class LoginPage extends Block {
-  constructor(props: any) {
+  constructor() {
     const data = store.getState();
     if (data.user) {
       router.go("/messenger");
@@ -83,7 +83,6 @@ class LoginPage extends Block {
     }
 
     super({
-      ...props,
       content,
       events: {
         submit: (event: Event) => handleSubmit(event),

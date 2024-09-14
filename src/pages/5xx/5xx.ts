@@ -6,7 +6,7 @@ import { Interface, Link, Main } from "../../components";
 import { connect } from "../../utils/Hoc.ts";
 
 class Error extends Block {
-  constructor(props: any = {}) {
+  constructor() {
     const login_link = new Link({
       url: "/login",
       text: "назад к чатам",
@@ -14,7 +14,6 @@ class Error extends Block {
     });
 
     super({
-      ...props,
       login_link,
     });
   }
@@ -25,7 +24,7 @@ class Error extends Block {
 }
 
 class ErrorPage extends Block {
-  constructor(props: any) {
+  constructor() {
     const error = new Error();
 
     const dialogContent = new Interface({
@@ -36,7 +35,7 @@ class ErrorPage extends Block {
       content: dialogContent,
     });
 
-    super({ ...props, content });
+    super({ content });
   }
 
   render() {
